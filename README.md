@@ -21,16 +21,16 @@
 |Baja Proveedor						       | 2018/04/23 | 5.8  | 52.4| 2018/04/23 | 52.4|
 |Cambio Proveedor					       | 2018/04/24 | 5.8  | 58.2| 2018/04/24 | 58.2|
 |Consulta Proveedor					       | 2018/04/24 | 5.8  | 58.2| 2018/04/24 | 58.2|
-|Creacion de la clase Compra		       |
-|Implementacion de la clase Compra         |
-|Creacion de la clase Venta 		       |
-|Implementacion de la clase Venta    	   |
-|Creacion de clase Reporte Existencia	   |
-|Implementacion de clase Reporte Existencia|
-|Creacion de clase Reporte Venta	 	   |
-|Implementacion de clase Reporte Venta	   |
-|Pruebas del sistema					   |
-|Correcciones							   |
+|Creacion de la clase Compra		       | 2018/04/25 | 11.7 | 69.9| 2018/04/26 | 69.9|
+|Implementacion de la clase Compra         | 2018/04/26 | 11.7 | 69.9| 2018/04/26 | 69.9|
+|Creacion de la clase Venta 		       | 2018/04/27 | 5.8  | 75.7| 2018/04/27 | 75.7|
+|Implementacion de la clase Venta    	   | 2018/04/30 | 5.8  | 81.5| 2018/04/30 | 81.5|
+|Creacion de clase Reporte Existencia	   | 2018/04/30 | 5.8  | 81.5| 2018/04/30 | 81.5|
+|Implementacion de clase Reporte Existencia| 2018/05/01 | 5.8  | 87.3| 2018/05/01 | 87.3|
+|Creacion de clase Reporte Venta	 	   | 2018/05/01 | 5.8  | 87.3| 2018/05/01 | 87.3|
+|Implementacion de clase Reporte Venta	   | 2018/05/02 | 5.8  | 93.1| 2018/05/02 | 93.1|
+|Pruebas del sistema					   | 2018/05/02 | 5.8  | 98.9| 2018/05/02 | 98.9|
+|Correcciones							   | 2018/05/03 | 1.1  | 100 | 2018/05/03 | 100 |
 
 ##Horas trabajadas por semana de cada integrante
 
