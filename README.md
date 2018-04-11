@@ -1,12 +1,5 @@
 # RepositorioTengoLaMenteEnBlanco
 
-//VP = valor porcentaje
-		//se obtiene con una regla de 3, siendo 17(por los dias) los Dias_Totales (el 100%)
-		//ejm. si en "Creacion de BD" son 2 Dias_Habiles para hacerlo (del dia 11 al dia Due Date 12)
-		//se hace la regla de 3 VP = (Dias_Habiles * 100) / Dias_Totales
-		//siendo en este ejemplo VP = (2 * 100) / 17
-		//siendo VP = 11.7
-
 | 			 	 Tarea 	 			       | 	Dia 	|  VP  | VGA |  Due Date  |  VG |
 |Creacion de BD 					       | 2018/04/11 | 11.7 | 11.7| 2018/04/12 |     |
 |Creacion de formularios			       | 2018/04/13 | 5.8  | 17.5| 2018/04/13 |     |
