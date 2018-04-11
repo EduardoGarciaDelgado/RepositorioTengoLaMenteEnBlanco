@@ -1,9 +1,9 @@
 # RepositorioTengoLaMenteEnBlanco
 
-| 			 	 Tarea 	 			       | Dia | VP | VGA | Due Date | VG |
-|Creacion de BD 					       | 1 |||||
-|Creacion de formularios			       |
-|Creacion de clase Producto			       |
+| 			 	 Tarea 	 			       | 	Dia 	|  VP  | VGA |  Due Date  |  VG |
+|Creacion de BD 					       | 2018/04/11 | 11.7 | 11.7| 2018/04/12 | 11.7|
+|Creacion de formularios			       | 2018/04/13 | 5.8  | 17.5| 2018/04/13 | 17.5|
+|Creacion de clase Producto			       | 2018/04/16 | 5.8  | 23.3| 2018/04/16 | 23.3|
 |Creacion de clase Proveedor		       |
 |Creacion de clase Conexion			       |
 |Alta Producto						       |
