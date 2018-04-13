@@ -29,7 +29,7 @@ public class Conexion {
             try {
                 con = (Connection) DriverManager.getConnection(url, user,pwd);
                 
-                System.out.print("Coneccion exitosa");
+                System.out.print("Conexion exitosa");
             } catch (SQLException ex) {
                 Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
             }

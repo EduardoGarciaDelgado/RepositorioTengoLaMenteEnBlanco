@@ -49,10 +49,7 @@ public class CambiosProveedor extends javax.swing.JFrame {
 
         TBLDetallesProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "ID Proveedor", "Nombre"
