@@ -40,6 +40,11 @@ public class ConsultaProveedor extends javax.swing.JFrame {
         jLabel1.setText("Ingrese el ID del proveedor:");
 
         BTNSalir.setText("Salir");
+        BTNSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNSalirActionPerformed(evt);
+            }
+        });
 
         TBLDetalleProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -91,6 +96,11 @@ public class ConsultaProveedor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
+MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
+        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_BTNSalirActionPerformed
 
     /**
      * @param args the command line arguments

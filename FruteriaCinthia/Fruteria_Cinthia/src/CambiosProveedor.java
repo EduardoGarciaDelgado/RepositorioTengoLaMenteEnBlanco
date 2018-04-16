@@ -60,6 +60,11 @@ public class CambiosProveedor extends javax.swing.JFrame {
         BTNModificar.setText("Modificar");
 
         BTNSalir.setText("Salir");
+        BTNSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,6 +109,11 @@ public class CambiosProveedor extends javax.swing.JFrame {
     private void TXTIdProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTIdProveedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TXTIdProveedorActionPerformed
+
+    private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
+MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
+        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_BTNSalirActionPerformed
 
     /**
      * @param args the command line arguments

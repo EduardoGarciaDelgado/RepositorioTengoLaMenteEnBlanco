@@ -44,6 +44,11 @@ public class BajaProveedor extends javax.swing.JFrame {
         BTNeliminar.setText("Eliminar");
 
         BTNsalir.setText("Salir");
+        BTNsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNsalirActionPerformed(evt);
+            }
+        });
 
         TXTDetallesProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -101,6 +106,11 @@ public class BajaProveedor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BTNsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNsalirActionPerformed
+MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
+        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_BTNsalirActionPerformed
 
     /**
      * @param args the command line arguments
