@@ -156,10 +156,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void MenuAltaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAltaProductosActionPerformed
         // TODO add your handling code here:
+        AltaProductos mAltaProductos = new AltaProductos();
+        mAltaProductos.show();
     }//GEN-LAST:event_MenuAltaProductosActionPerformed
 
     private void MenuBajaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBajaProductosActionPerformed
         // TODO add your handling code here:
+        BajaProductos mBajaProductos = new BajaProductos();
+        mBajaProductos.show();
     }//GEN-LAST:event_MenuBajaProductosActionPerformed
 
     private void MenuCambiosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCambiosProductosActionPerformed

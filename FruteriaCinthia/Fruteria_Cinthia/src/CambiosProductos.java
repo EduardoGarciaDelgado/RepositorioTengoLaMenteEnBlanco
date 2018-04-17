@@ -1,3 +1,7 @@
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,6 +17,9 @@ public class CambiosProductos extends javax.swing.JFrame {
     /**
      * Creates new form CambiosProductos
      */
+    Conexion mConexion = new Conexion();
+    Producto mProducto = new Producto();
+    DefaultTableModel Tabla = new DefaultTableModel(); int ContadorColumna = 1;
     public CambiosProductos() {
         initComponents();
     }
@@ -48,15 +55,13 @@ public class CambiosProductos extends javax.swing.JFrame {
         });
 
         BTNBuscar.setText("Buscar");
-
-        TBLProductos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID Producto", "Nombre", "Precio", "Cantidad"
+        BTNBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNBuscarActionPerformed(evt);
             }
-        ));
+        });
+
+        TBLProductos.setModel(Tabla);
         jScrollPane1.setViewportView(TBLProductos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -105,6 +110,46 @@ public class CambiosProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_BTNSalirActionPerformed
+
+    private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
+        // TODO add your handling code here:
+        if(mConexion.conexion()){
+            Producto mProducto = mConexion.consultarProducto(Integer.parseInt(this.TXTProductoModificar.getText()));
+            String [] Datos;
+            
+        
+            if (mProducto != null) {
+                if(ContadorColumna == 1) {
+                Tabla.addColumn("ID");
+                Tabla.addColumn("Nombre");
+                Tabla.addColumn("Precio");
+                ContadorColumna=2;
+                }
+                       
+                Datos = new String[3];
+                
+                Datos[0] = ""+ mProducto.getIDProducto();
+                Datos[1] = mProducto.getNombreProducto();
+                Datos[2] = "" + mProducto.getPrecioProducto();
+            
+                Tabla.addRow(Datos);
+            } else {
+                // No hay datos
+                JOptionPane.showMessageDialog(null,"No existe ese Producto...");
+            }
+            this.TBLProductos = new javax.swing.JTable();
+            this.TBLProductos.setModel(Tabla);
+            this.TBLProductos.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.TBLProductos.getColumnModel().getColumn(1).setPreferredWidth(100);
+            this.TBLProductos.getColumnModel().getColumn(2).setPreferredWidth(400);
+            if (this.TBLProductos.getRowCount() > 0) {
+                this.TBLProductos.setRowSelectionInterval(0, 0);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null,"Error al consultar");
+                }
+            mConexion.desconectar();
+    }//GEN-LAST:event_BTNBuscarActionPerformed
 
     /**
      * @param args the command line arguments

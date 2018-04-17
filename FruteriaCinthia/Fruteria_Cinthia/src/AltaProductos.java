@@ -1,3 +1,11 @@
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,8 +21,12 @@ public class AltaProductos extends javax.swing.JFrame {
     /**
      * Creates new form AltaProductos
      */
+    Conexion mConexion = new Conexion();
+    Producto mProducto = new Producto();
+    
     public AltaProductos() {
         initComponents();
+        
     }
 
     /**
@@ -31,9 +43,16 @@ public class AltaProductos extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         TXTNombreProducto = new javax.swing.JTextField();
         TXTPrecioProducto = new javax.swing.JTextField();
-        TXTFechaCaducidad = new javax.swing.JTextField();
+        TXTIDProveedor = new javax.swing.JTextField();
         BTNGuardarProducto = new javax.swing.JButton();
         BTNSalir = new javax.swing.JButton();
+        ComBoxAnyo = new javax.swing.JComboBox<>();
+        ComBoxMes = new javax.swing.JComboBox<>();
+        ComBoxDia = new javax.swing.JComboBox<>();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -44,6 +63,11 @@ public class AltaProductos extends javax.swing.JFrame {
         jLabel3.setText("Fecha Estimada de Caducidad");
 
         BTNGuardarProducto.setText("Guardar");
+        BTNGuardarProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNGuardarProductoActionPerformed(evt);
+            }
+        });
 
         BTNSalir.setText("Salir");
         BTNSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -52,33 +76,72 @@ public class AltaProductos extends javax.swing.JFrame {
             }
         });
 
+        ComBoxAnyo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032" }));
+        ComBoxAnyo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ComBoxAnyoActionPerformed(evt);
+            }
+        });
+
+        ComBoxMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+
+        ComBoxDia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        jLabel4.setText("Año");
+
+        jLabel5.setText("Mes");
+
+        jLabel6.setText("Dia");
+
+        jLabel7.setText("Proveedor");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel7))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel3))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(9, 9, 9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(TXTIDProveedor)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TXTNombreProducto)
-                                    .addComponent(TXTPrecioProducto)))
-                            .addGroup(layout.createSequentialGroup()
+                                    .addComponent(ComBoxAnyo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel4)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(ComBoxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel5)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(TXTFechaCaducidad))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(52, 52, 52)
-                        .addComponent(BTNGuardarProducto)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 180, Short.MAX_VALUE)
-                        .addComponent(BTNSalir)))
-                .addGap(72, 72, 72))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jLabel6))
+                                    .addComponent(ComBoxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(18, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(TXTNombreProducto, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE)
+                            .addComponent(TXTPrecioProducto))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addComponent(BTNGuardarProducto)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BTNSalir)
+                .addGap(67, 67, 67))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -94,12 +157,23 @@ public class AltaProductos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(TXTFechaCaducidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(53, 53, 53)
+                    .addComponent(ComBoxAnyo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComBoxMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ComBoxDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TXTIDProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTNGuardarProducto)
                     .addComponent(BTNSalir))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         pack();
@@ -109,6 +183,39 @@ public class AltaProductos extends javax.swing.JFrame {
         // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_BTNSalirActionPerformed
+
+    private void BTNGuardarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNGuardarProductoActionPerformed
+            // TODO add your handling code here:
+            
+            String Anyo = (String) ComBoxAnyo.getSelectedItem();
+            String Mes = (String) ComBoxMes.getSelectedItem();
+            String Dia = (String) ComBoxDia.getSelectedItem();
+            String Fecha = Anyo + "-" + Mes + "-" + Dia;
+            mProducto.setNombreProducto(this.TXTNombreProducto.getText());
+            mProducto.setPrecioProducto(Float.parseFloat(this.TXTPrecioProducto.getText()));
+            mProducto.setFechaCaducidad(Fecha);
+            mProducto.setProveedor_idProveedor(this.TXTIDProveedor.getText());
+            
+            if(mConexion.conexion()) {
+                if (mConexion.guardarProducto(mProducto))
+                {
+                    JOptionPane.showMessageDialog(null,"El PRODUCTO fue guardado con éxito");
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"Error al guardar el PRODUCTO");
+                }
+                mConexion.desconectar();
+            }
+            TXTNombreProducto.setText("");
+            TXTPrecioProducto.setText("");
+            TXTIDProveedor.setText("");
+        
+    }//GEN-LAST:event_BTNGuardarProductoActionPerformed
+
+    private void ComBoxAnyoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComBoxAnyoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ComBoxAnyoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -148,11 +255,18 @@ public class AltaProductos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNGuardarProducto;
     private javax.swing.JButton BTNSalir;
-    private javax.swing.JTextField TXTFechaCaducidad;
+    private javax.swing.JComboBox<String> ComBoxAnyo;
+    private javax.swing.JComboBox<String> ComBoxDia;
+    private javax.swing.JComboBox<String> ComBoxMes;
+    private javax.swing.JTextField TXTIDProveedor;
     private javax.swing.JTextField TXTNombreProducto;
     private javax.swing.JTextField TXTPrecioProducto;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     // End of variables declaration//GEN-END:variables
 }

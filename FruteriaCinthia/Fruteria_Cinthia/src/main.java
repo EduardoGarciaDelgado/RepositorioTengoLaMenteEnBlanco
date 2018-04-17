@@ -21,9 +21,5 @@ public class main {
     public static void main(String[] args) {
         MenuPrincipal mC = new MenuPrincipal();
         mC.show();
-        
-        con = Conexion.conexion();
-        
-        
     }
 }
