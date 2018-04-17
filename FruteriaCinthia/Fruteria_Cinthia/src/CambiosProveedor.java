@@ -14,6 +14,8 @@ public class CambiosProveedor extends javax.swing.JFrame {
     /**
      * Creates new form FRM_Modificar
      */
+    Conexion mConexion = new Conexion();
+    Proveedor mProveedor = new Proveedor();
     public CambiosProveedor() {
         initComponents();
     }
@@ -58,8 +60,18 @@ public class CambiosProveedor extends javax.swing.JFrame {
         jScrollPane1.setViewportView(TBLDetallesProveedor);
 
         BTNModificar.setText("Modificar");
+        BTNModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNModificarActionPerformed(evt);
+            }
+        });
 
         BTNSalir.setText("Salir");
+        BTNSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -104,6 +116,30 @@ public class CambiosProveedor extends javax.swing.JFrame {
     private void TXTIdProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTIdProveedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_TXTIdProveedorActionPerformed
+
+    private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
+        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
+        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_BTNSalirActionPerformed
+
+    private void BTNModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNModificarActionPerformed
+        // TODO add your handling code here:
+        Proveedor nProveedor = new Proveedor();
+        mProveedor.setIdProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
+        //nProveedor.setNombre(this.TBLDetallesProveedor.getColumnName(NORMAL));
+        if (mConexion.conectar())
+            {
+                if (mConexion.CambiosProveedor(mProveedor, nProveedor))
+                {
+                    System.out.println("El Videojuego fue modificado con éxito");
+                }
+                else
+                {
+                    System.out.println("Error al modificar el Videojuego");
+                }
+                mConexion.desconectar();
+            }
+    }//GEN-LAST:event_BTNModificarActionPerformed
 
     /**
      * @param args the command line arguments

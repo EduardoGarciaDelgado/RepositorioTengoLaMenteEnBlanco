@@ -14,6 +14,8 @@ public class BajaProveedor extends javax.swing.JFrame {
     /**
      * Creates new form FRM_BajaProveedor
      */
+    Conexion mConexion = new Conexion();
+    Proveedor mProveedor = new Proveedor();
     public BajaProveedor() {
         initComponents();
     }
@@ -28,7 +30,7 @@ public class BajaProveedor extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        TXTNombreProveedor = new javax.swing.JTextField();
+        TXTIdProveedor = new javax.swing.JTextField();
         BTNBuscar = new javax.swing.JButton();
         BTNeliminar = new javax.swing.JButton();
         BTNsalir = new javax.swing.JButton();
@@ -42,8 +44,18 @@ public class BajaProveedor extends javax.swing.JFrame {
         BTNBuscar.setText("Buscar");
 
         BTNeliminar.setText("Eliminar");
+        BTNeliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNeliminarActionPerformed(evt);
+            }
+        });
 
         BTNsalir.setText("Salir");
+        BTNsalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNsalirActionPerformed(evt);
+            }
+        });
 
         TXTDetallesProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -68,7 +80,7 @@ public class BajaProveedor extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(TXTNombreProveedor))
+                        .addComponent(TXTIdProveedor))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -87,7 +99,7 @@ public class BajaProveedor extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(TXTNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TXTIdProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BTNBuscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,6 +113,29 @@ public class BajaProveedor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void BTNsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNsalirActionPerformed
+        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
+        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_BTNsalirActionPerformed
+
+    private void BTNeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNeliminarActionPerformed
+        // TODO add your handling code here:
+        if (mConexion.conectar())
+        {
+            mProveedor = new Proveedor();
+            mProveedor.setIdProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
+            if (mConexion.BajaProveedor(mProveedor))
+            {
+                System.out.println("Videojuego eliminado con éxito");
+            }
+            else
+            {
+                System.out.println("Error al eliminar Videojuego");
+            }
+            mConexion.desconectar();
+        }
+    }//GEN-LAST:event_BTNeliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,7 +180,7 @@ public class BajaProveedor extends javax.swing.JFrame {
     private javax.swing.JButton BTNeliminar;
     private javax.swing.JButton BTNsalir;
     private javax.swing.JTable TXTDetallesProveedor;
-    private javax.swing.JTextField TXTNombreProveedor;
+    private javax.swing.JTextField TXTIdProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables

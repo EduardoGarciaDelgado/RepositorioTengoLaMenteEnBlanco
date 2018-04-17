@@ -14,6 +14,8 @@ public class AltaProveedores extends javax.swing.JFrame {
     /**
      * Creates new form FRM_AltaProveedores
      */
+    Conexion mConexion = new Conexion();
+    Proveedor mProveedor = new Proveedor();
     public AltaProveedores() {
         initComponents();
     }
@@ -30,16 +32,12 @@ public class AltaProveedores extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         TXTNombreProveedor = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        TXTIdProveedor = new javax.swing.JTextField();
         BTNGuardar = new javax.swing.JButton();
         BTNSalir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel2.setText("Nombre:");
-
-        jLabel3.setText("ID Proveedor:");
 
         BTNGuardar.setText("Guardar");
         BTNGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -49,6 +47,11 @@ public class AltaProveedores extends javax.swing.JFrame {
         });
 
         BTNSalir.setText("Salir");
+        BTNSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNSalirActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -67,10 +70,6 @@ public class AltaProveedores extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BTNSalir))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(18, 18, 18)
-                                .addComponent(TXTIdProveedor))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(52, 52, 52)
                                 .addComponent(TXTNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -81,11 +80,7 @@ public class AltaProveedores extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(jLabel1)
-                .addGap(63, 63, 63)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(TXTIdProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(TXTNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -93,7 +88,7 @@ public class AltaProveedores extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BTNGuardar)
                     .addComponent(BTNSalir))
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -101,7 +96,25 @@ public class AltaProveedores extends javax.swing.JFrame {
 
     private void BTNGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNGuardarActionPerformed
         // TODO add your handling code here:
+        mProveedor.setNombre(this.TXTNombreProveedor.getText());
+        if (mConexion.conectar())
+        {
+            if (mConexion.AltaProveedor(mProveedor))
+            {
+                System.out.println("El Videojuego fue guardado con éxito");
+            }
+            else
+            {
+                System.out.println("Error al guardar el Videojuego");
+            }
+            mConexion.desconectar();
+        }
     }//GEN-LAST:event_BTNGuardarActionPerformed
+
+    private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
+        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
+        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_BTNSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -144,10 +157,8 @@ public class AltaProveedores extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNGuardar;
     private javax.swing.JButton BTNSalir;
-    private javax.swing.JTextField TXTIdProveedor;
     private javax.swing.JTextField TXTNombreProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }

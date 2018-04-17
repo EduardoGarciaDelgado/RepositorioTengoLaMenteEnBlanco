@@ -155,6 +155,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuAltaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAltaProductosActionPerformed
+        AltaProductos FRMAltaProductos = new AltaProductos();
+        FRMAltaProductos.setVisible(true);
+        
         // TODO add your handling code here:
         AltaProductos mAltaProductos = new AltaProductos();
         mAltaProductos.show();
@@ -162,36 +165,56 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void MenuBajaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBajaProductosActionPerformed
         // TODO add your handling code here:
+<<<<<<< HEAD
         BajaProductos mBajaProductos = new BajaProductos();
         mBajaProductos.show();
+=======
+        BajaProductos FRMBajaProductos = new BajaProductos();
+        FRMBajaProductos.setVisible(true);
+        
+>>>>>>> b4217c4f227190f32a4cb0489e478a500c9592a1
     }//GEN-LAST:event_MenuBajaProductosActionPerformed
 
     private void MenuCambiosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCambiosProductosActionPerformed
         // TODO add your handling code here:
+        CambiosProductos FRMCambiosProductos = new CambiosProductos();
+        FRMCambiosProductos.setVisible(true);
     }//GEN-LAST:event_MenuCambiosProductosActionPerformed
 
     private void MenuBajaProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBajaProveedorActionPerformed
         // TODO add your handling code here:
+        BajaProveedor FRMBajaProveedor = new BajaProveedor();
+        FRMBajaProveedor.setVisible(true);
     }//GEN-LAST:event_MenuBajaProveedorActionPerformed
 
     private void MenuCambiosProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCambiosProveedorActionPerformed
         // TODO add your handling code here:
+        CambiosProveedor FRMCambiosProveedor = new CambiosProveedor();
+        FRMCambiosProveedor.setVisible(true);
     }//GEN-LAST:event_MenuCambiosProveedorActionPerformed
 
     private void MenuConsultasProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuConsultasProveedorActionPerformed
         // TODO add your handling code here:
+        ConsultaProveedor FRMConsultaProveedor = new ConsultaProveedor();
+        FRMConsultaProveedor.setVisible(true);
     }//GEN-LAST:event_MenuConsultasProveedorActionPerformed
 
     private void MenuAltaProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAltaProveedorActionPerformed
         // TODO add your handling code here:
+        AltaProveedores FRMAltaProveedores = new AltaProveedores();
+        FRMAltaProveedores.setVisible(true);
     }//GEN-LAST:event_MenuAltaProveedorActionPerformed
 
     private void ReporteExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteExistenciaActionPerformed
         // TODO add your handling code here:
+       ReporteDeExistencias FRMReporteDeExistencias = new ReporteDeExistencias();
+       FRMReporteDeExistencias.setVisible(true);
     }//GEN-LAST:event_ReporteExistenciaActionPerformed
 
     private void ReporteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteVentaActionPerformed
         // TODO add your handling code here:
+        ReporteDeVentas FRMReporteDeVentas = new ReporteDeVentas();
+        FRMReporteDeVentas.setVisible(true);
     }//GEN-LAST:event_ReporteVentaActionPerformed
 
     /**

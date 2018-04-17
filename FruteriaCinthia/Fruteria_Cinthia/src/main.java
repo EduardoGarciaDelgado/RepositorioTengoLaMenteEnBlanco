@@ -19,7 +19,16 @@ public class main {
     static Connection con = null;
     
     public static void main(String[] args) {
+        Conexion mConexion = new Conexion();
+        Proveedor mProveedor = new Proveedor();
         MenuPrincipal mC = new MenuPrincipal();
         mC.show();
+<<<<<<< HEAD
+=======
+        
+        //con = Conexion.conexion();
+        
+        
+>>>>>>> b4217c4f227190f32a4cb0489e478a500c9592a1
     }
 }
