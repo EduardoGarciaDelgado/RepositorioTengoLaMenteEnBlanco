@@ -197,7 +197,7 @@ public class AltaProductos extends javax.swing.JFrame {
             mProducto.setFechaCaducidad(Fecha);
             mProducto.setProveedor_idProveedor(this.TXTIDProveedor.getText());
             
-            if(mConexion.conexion()) {
+            if(mConexion.con()) {
                 if (mConexion.guardarProducto(mProducto))
                 {
                     JOptionPane.showMessageDialog(null,"El PRODUCTO fue guardado con éxito");

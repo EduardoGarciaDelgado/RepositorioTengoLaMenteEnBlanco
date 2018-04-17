@@ -29,7 +29,7 @@
                   <Group type="102" attributes="0">
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="TXTNombreProveedor" max="32767" attributes="0"/>
+                      <Component id="TXTIdProveedor" max="32767" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -56,7 +56,7 @@
               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="TXTNombreProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="TXTIdProveedor" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="BTNBuscar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -79,7 +79,7 @@
         <Property name="text" type="java.lang.String" value="Ingrese el ID del Proveedor:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="TXTNombreProveedor">
+    <Component class="javax.swing.JTextField" name="TXTIdProveedor">
     </Component>
     <Component class="javax.swing.JButton" name="BTNBuscar">
       <Properties>
@@ -90,6 +90,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Eliminar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTNeliminarActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BTNsalir">
       <Properties>

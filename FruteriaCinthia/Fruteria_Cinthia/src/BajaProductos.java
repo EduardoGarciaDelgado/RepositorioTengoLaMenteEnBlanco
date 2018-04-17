@@ -119,7 +119,7 @@ MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
 
     private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
         // TODO add your handling code here:
-        if(mConexion.conexion()){
+        if(mConexion.con()){
             Producto mProducto = mConexion.consultarProducto(Integer.parseInt(this.TXTProductoEliminar.getText()));
             String [] Datos;
             
@@ -159,7 +159,7 @@ MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
 
     private void BTNEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNEliminarActionPerformed
         // TODO add your handling code here:
-        if (mConexion.conexion())
+        if (mConexion.con())
             {
                 mProducto = new Producto();
                 mProducto.setIDProducto(Integer.parseInt(this.TXTProductoEliminar.getText()));

@@ -127,7 +127,7 @@ public class CambiosProveedor extends javax.swing.JFrame {
         Proveedor nProveedor = new Proveedor();
         mProveedor.setIdProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
         //nProveedor.setNombre(this.TBLDetallesProveedor.getColumnName(NORMAL));
-        if (mConexion.conectar())
+        if (mConexion.con())
             {
                 if (mConexion.CambiosProveedor(mProveedor, nProveedor))
                 {

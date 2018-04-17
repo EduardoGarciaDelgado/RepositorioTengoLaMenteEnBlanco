@@ -6,17 +6,13 @@
 
 /**
  *
-<<<<<<< HEAD
+
  * @author macbookair
  */
 public class Proveedor {
     public String Nombre;
-=======
- * @author Cinthia
- */
-public class Proveedor {
-    public String Nombre;
     public int IdProveedor;
+    
     public Proveedor(){
         Nombre="";
         IdProveedor=0;
@@ -29,7 +25,6 @@ public class Proveedor {
     public void setIdProveedor(int IdProveedor) {
         this.IdProveedor = IdProveedor;
     }
->>>>>>> b4217c4f227190f32a4cb0489e478a500c9592a1
 
     public String getNombre() {
         return Nombre;
@@ -38,5 +33,5 @@ public class Proveedor {
     public void setNombre(String Nombre) {
         this.Nombre = Nombre;
     }
-    
+ 
 }

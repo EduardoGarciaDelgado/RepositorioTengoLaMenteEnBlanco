@@ -121,7 +121,7 @@ public class BajaProveedor extends javax.swing.JFrame {
 
     private void BTNeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNeliminarActionPerformed
         // TODO add your handling code here:
-        if (mConexion.conectar())
+        if (mConexion.con())
         {
             mProveedor = new Proveedor();
             mProveedor.setIdProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));

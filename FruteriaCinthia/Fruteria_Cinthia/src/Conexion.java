@@ -1,20 +1,13 @@
 
 //import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-<<<<<<< HEAD
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.*;
-
-=======
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.sql.Connection;
->>>>>>> b4217c4f227190f32a4cb0489e478a500c9592a1
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -26,36 +19,19 @@ import java.sql.Connection;
  * @author macbookair
  */
 public class Conexion {
-<<<<<<< HEAD
     private Connection con;
-=======
-    private Connection conexion;
->>>>>>> b4217c4f227190f32a4cb0489e478a500c9592a1
     
-    public boolean conectar() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            conexion = DriverManager.getConnection(
-                    "jdbc:mysql://localhost/mydb", "root", "");
-            if (conexion != null) {
-                return true;
-            } else {
-                return false;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
+    static String url = "jdbc:mysql://localhost:8889/mydb";
+    static String pwd = "root";
+    static String user = "root";
     
-<<<<<<< HEAD
-    public boolean conexion() {
+    public boolean con() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             
             try {
                 con = (Connection) DriverManager.getConnection(url, user,pwd);
-                System.out.print("Conexion exitosa");
+                System.out.print("con exitosa");
                 
                 if (con != null) {
                     return true;                  
@@ -129,20 +105,32 @@ public class Conexion {
     
     public Producto consultarProducto(int ID) {
         Producto mProducto = null;
-=======
-     public void desconectar() {
+        Statement consulta;
+        ResultSet resultado;
+        
         try {
-            this.conexion.close();
+            consulta = con.createStatement();
+            resultado = consulta.executeQuery("select * from Producto " +
+                        "where idProducto = " + ID + ";");
+            if (resultado.next()) {
+                mProducto = new Producto();
+                mProducto.setIDProducto(resultado.getInt("idProducto"));
+                mProducto.setNombreProducto(resultado.getString("Nombre"));
+                mProducto.setPrecioProducto(Float.parseFloat(resultado.getString("Precio")));             
+            }
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
+            
+        return mProducto;       
     }
     
+    //-------------- ABCC Proveedor
     public boolean AltaProveedor(Proveedor mProveedor) {
         Statement consulta;
 
         try {
-            consulta = conexion.createStatement();
+            consulta = con.createStatement();
             consulta.execute("insert into Proveedor " + 
                         "(IdProveedor, NombreProveedor) " +
                         "values (null,'" + mProveedor.getNombre() + "');");
@@ -155,7 +143,7 @@ public class Conexion {
     public boolean BajaProveedor(Proveedor mProveedor) {
         Statement consulta;
         try {
-            consulta = conexion.createStatement();
+            consulta = con.createStatement();
             consulta.execute("delete from Proveedor " + 
                         " where IdProveedor = " + mProveedor.getIdProveedor() + ";");
             return true;
@@ -168,7 +156,7 @@ public class Conexion {
         Statement consulta;
 
         try {
-            consulta = conexion.createStatement();
+            consulta = con.createStatement();
             consulta.execute("update Proveedor set " + 
                         "NombreProveedor = '" + nProveedor.getNombre() + "'" +
                         " where IdProveedor = " + mProveedor.getIdProveedor() + ";");
@@ -184,7 +172,7 @@ public class Conexion {
         ResultSet resultado;
         
         try {
-            consulta = conexion.createStatement();
+            consulta = con.createStatement();
             resultado = consulta.executeQuery("select * from Proveedor " +
                         "where IdProveedor = " + IdProveedor + ";");
             if (resultado.next()) {
@@ -201,39 +189,22 @@ public class Conexion {
       public ArrayList ConsultaProveedor() {
         ArrayList mLista = new ArrayList();
         Proveedor mProveedor=null;
->>>>>>> b4217c4f227190f32a4cb0489e478a500c9592a1
         Statement consulta;
         ResultSet resultado;
         
         try {
-<<<<<<< HEAD
             consulta = con.createStatement();
-            resultado = consulta.executeQuery("select * from Producto " +
-                        "where idProducto = " + ID + ";");
-            if (resultado.next()) {
-                mProducto = new Producto();
-                mProducto.setIDProducto(resultado.getInt("idProducto"));
-                mProducto.setNombreProducto(resultado.getString("Nombre"));
-                mProducto.setPrecioProducto(Float.parseFloat(resultado.getString("Precio")));             
-=======
-            consulta = conexion.createStatement();
             resultado = consulta.executeQuery("select * from alta;");
             while (resultado.next()) {
                 mProveedor = new Proveedor();
                 mProveedor.setIdProveedor(resultado.getInt("IdProveedor"));
                 mProveedor.setNombre(resultado.getString("NombreProveedor"));
                 mLista.add(mProveedor);
->>>>>>> b4217c4f227190f32a4cb0489e478a500c9592a1
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-<<<<<<< HEAD
-            
-        return mProducto;       
-=======
         return mLista;
->>>>>>> b4217c4f227190f32a4cb0489e478a500c9592a1
-    }
+      }
     
 }

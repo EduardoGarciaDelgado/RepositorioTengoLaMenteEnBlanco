@@ -115,7 +115,7 @@ public class ConsultaProveedor extends javax.swing.JFrame {
 
     private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
         // TODO add your handling code here:
-        if(mConexion.conectar()){
+        if(mConexion.con()){
             Proveedor mProveedor = mConexion.ConsultaProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
             String [] Datos;
         
