@@ -1,4 +1,7 @@
 
+import javax.swing.table.DefaultTableModel;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,6 +18,9 @@ public class ConsultaProveedor extends javax.swing.JFrame {
     /**
      * Creates new form FRM_ConsultarProveedor
      */
+    DefaultTableModel Tabla = new DefaultTableModel();
+    Conexion mConexion = new Conexion();
+    Proveedor mProveedor = new Proveedor();
     public ConsultaProveedor() {
         initComponents();
     }
@@ -60,6 +66,11 @@ public class ConsultaProveedor extends javax.swing.JFrame {
         jScrollPane1.setViewportView(TBLDetalleProveedor);
 
         BTNBuscar.setText("Buscar");
+        BTNBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -98,9 +109,42 @@ public class ConsultaProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
-MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
+        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
         FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_BTNSalirActionPerformed
+
+    private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
+        // TODO add your handling code here:
+        if(mConexion.conectar()){
+            Proveedor mProveedor = mConexion.ConsultaProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
+            String [] Datos;
+        
+            if (mProveedor != null) {
+                Tabla.addColumn("IdProveedor");
+                Tabla.addColumn("NombreProveedor");
+                       
+                Datos = new String[2];
+                
+                Datos[0] = "" + mProveedor.getIdProveedor();
+                Datos[1] = mProveedor.getNombre();
+            
+                Tabla.addRow(Datos);
+            } else {
+                // No hay datos
+                System.err.println("No existe ese Proveedor...");
+            }
+            this.TBLDetalleProveedor = new javax.swing.JTable();
+            this.TBLDetalleProveedor.setModel(Tabla);
+            this.TBLDetalleProveedor.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.TBLDetalleProveedor.getColumnModel().getColumn(1).setPreferredWidth(100);
+            if (this.TBLDetalleProveedor.getRowCount() > 0) {
+                this.TBLDetalleProveedor.setRowSelectionInterval(0, 0);
+                }
+            } else {
+                System.err.println("Error al consultar");
+                }
+            mConexion.desconectar();
+    }//GEN-LAST:event_BTNBuscarActionPerformed
 
     /**
      * @param args the command line arguments

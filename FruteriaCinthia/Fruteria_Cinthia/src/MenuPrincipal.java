@@ -163,20 +163,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void MenuBajaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBajaProductosActionPerformed
         // TODO add your handling code here:
-         BajaProductos FRMBajaProductos = new BajaProductos();
+        BajaProductos FRMBajaProductos = new BajaProductos();
         FRMBajaProductos.setVisible(true);
         
     }//GEN-LAST:event_MenuBajaProductosActionPerformed
 
     private void MenuCambiosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCambiosProductosActionPerformed
         // TODO add your handling code here:
-            CambiosProductos FRMCambiosProductos = new CambiosProductos();
+        CambiosProductos FRMCambiosProductos = new CambiosProductos();
         FRMCambiosProductos.setVisible(true);
     }//GEN-LAST:event_MenuCambiosProductosActionPerformed
 
     private void MenuBajaProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuBajaProveedorActionPerformed
         // TODO add your handling code here:
-            BajaProveedor FRMBajaProveedor = new BajaProveedor();
+        BajaProveedor FRMBajaProveedor = new BajaProveedor();
         FRMBajaProveedor.setVisible(true);
     }//GEN-LAST:event_MenuBajaProveedorActionPerformed
 
@@ -201,7 +201,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void ReporteExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteExistenciaActionPerformed
         // TODO add your handling code here:
        ReporteDeExistencias FRMReporteDeExistencias = new ReporteDeExistencias();
-        FRMReporteDeExistencias.setVisible(true);
+       FRMReporteDeExistencias.setVisible(true);
     }//GEN-LAST:event_ReporteExistenciaActionPerformed
 
     private void ReporteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteVentaActionPerformed

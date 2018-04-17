@@ -19,10 +19,12 @@ public class main {
     static Connection con = null;
     
     public static void main(String[] args) {
+        Conexion mConexion = new Conexion();
+        Proveedor mProveedor = new Proveedor();
         MenuPrincipal mC = new MenuPrincipal();
         mC.show();
         
-        con = Conexion.conexion();
+        //con = Conexion.conexion();
         
         
     }
