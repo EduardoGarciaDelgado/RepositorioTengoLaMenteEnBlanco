@@ -112,8 +112,7 @@ public class BajaProductos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
-MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
-        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+       // TODO add your handling code here:
         dispose();
     }//GEN-LAST:event_BTNSalirActionPerformed
 
@@ -129,14 +128,20 @@ MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
                 Tabla.addColumn("ID");
                 Tabla.addColumn("Nombre");
                 Tabla.addColumn("Precio");
+                Tabla.addColumn("Fecha Caducidad");
+                Tabla.addColumn("ID Proveedor");
+                Tabla.addColumn("Cantidad");
                 ContadorColumna=2;
                 }
                        
-                Datos = new String[3];
+                Datos = new String[6];
                 
                 Datos[0] = ""+ mProducto.getIDProducto();
                 Datos[1] = mProducto.getNombreProducto();
                 Datos[2] = "" + mProducto.getPrecioProducto();
+                Datos[3] = mProducto.getFechaCaducidad();
+                Datos[4] = "" + mProducto.getProveedor_idProveedor();
+                Datos[5] = "" + mProducto.getCantidadProducto();
             
                 Tabla.addRow(Datos);
             } else {
@@ -148,6 +153,9 @@ MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
             this.TBLProductos.getColumnModel().getColumn(0).setPreferredWidth(50);
             this.TBLProductos.getColumnModel().getColumn(1).setPreferredWidth(100);
             this.TBLProductos.getColumnModel().getColumn(2).setPreferredWidth(400);
+            this.TBLProductos.getColumnModel().getColumn(3).setPreferredWidth(600);
+            this.TBLProductos.getColumnModel().getColumn(4).setPreferredWidth(400);
+            this.TBLProductos.getColumnModel().getColumn(5).setPreferredWidth(100);
             if (this.TBLProductos.getRowCount() > 0) {
                 this.TBLProductos.setRowSelectionInterval(0, 0);
                 }

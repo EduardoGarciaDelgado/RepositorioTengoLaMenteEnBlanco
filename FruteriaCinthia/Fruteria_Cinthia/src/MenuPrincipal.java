@@ -72,6 +72,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         MenuCatalogoProductos.add(MenuCambiosProductos);
 
         MenuConsultasProductos.setText("CONSULTAS PRODUCTOS");
+        MenuConsultasProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuConsultasProductosActionPerformed(evt);
+            }
+        });
         MenuCatalogoProductos.add(MenuConsultasProductos);
 
         jMenuBar1.add(MenuCatalogoProductos);
@@ -155,9 +160,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuAltaProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAltaProductosActionPerformed
-        AltaProductos FRMAltaProductos = new AltaProductos();
-        FRMAltaProductos.setVisible(true);
-        
         // TODO add your handling code here:
         AltaProductos mAltaProductos = new AltaProductos();
         mAltaProductos.show();
@@ -167,8 +169,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         BajaProductos mBajaProductos = new BajaProductos();
         mBajaProductos.show();
-        BajaProductos FRMBajaProductos = new BajaProductos();
-        FRMBajaProductos.setVisible(true);
     }//GEN-LAST:event_MenuBajaProductosActionPerformed
 
     private void MenuCambiosProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuCambiosProductosActionPerformed
@@ -212,6 +212,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         //ReporteDeVentas FRMReporteDeVentas = new ReporteDeVentas();
         //FRMReporteDeVentas.setVisible(true);
     }//GEN-LAST:event_ReporteVentaActionPerformed
+
+    private void MenuConsultasProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuConsultasProductosActionPerformed
+        // TODO add your handling code here:
+        ConsultaProductos mConsultaProductos = new ConsultaProductos();
+        mConsultaProductos.show();
+    }//GEN-LAST:event_MenuConsultasProductosActionPerformed
 
     /**
      * @param args the command line arguments

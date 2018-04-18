@@ -31,7 +31,7 @@ public class Conexion {
             
             try {
                 con = (Connection) DriverManager.getConnection(url, user,pwd);
-                System.out.print("con exitosa");
+                //System.out.print("con exitosa");
                 
                 if (con != null) {
                     return true;                  
@@ -65,7 +65,8 @@ public class Conexion {
             consulta.execute("insert into Producto " +
                         "values (null,'" + mProducto.getNombreProducto() + "'," +
                         "'" + mProducto.getPrecioProducto() + "'," +
-                         "'" + mProducto.getFechaCaducidad() + "'," + "'" + mProducto.getProveedor_idProveedor() +"');");
+                         "'" + mProducto.getFechaCaducidad() + "'," + "'" + mProducto.getProveedor_idProveedor() +
+                         "','" + mProducto.getCantidadProducto() + "');");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -81,7 +82,9 @@ public class Conexion {
             consulta.execute("update Producto set " + 
                         "Nombre = '" + mProductoNuevo.getNombreProducto() + "'," +
                         "Precio = '" + mProductoNuevo.getPrecioProducto() + "'," +
-                        "FechaCaducidad = '" + mProductoNuevo.getFechaCaducidad() + "'" +
+                        "FechaCaducidad = '" + mProductoNuevo.getFechaCaducidad() + "'," +
+                        "Proveedor_idProveedor = '" + mProductoNuevo.getProveedor_idProveedor() + "'," +
+                        "Cantidad = '" + mProductoNuevo.getCantidadProducto() + "'" +
                         " where idProducto = " +  mProductoViejo.getIDProducto() + ";");
             return true;
         } catch (Exception e) {
@@ -116,7 +119,10 @@ public class Conexion {
                 mProducto = new Producto();
                 mProducto.setIDProducto(resultado.getInt("idProducto"));
                 mProducto.setNombreProducto(resultado.getString("Nombre"));
-                mProducto.setPrecioProducto(Float.parseFloat(resultado.getString("Precio")));             
+                mProducto.setPrecioProducto(Float.parseFloat(resultado.getString("Precio")));
+                mProducto.setFechaCaducidad(resultado.getString("FechaCaducidad"));
+                mProducto.setProveedor_idProveedor(resultado.getString("Proveedor_idProveedor"));
+                mProducto.setCantidadProducto(Float.parseFloat(resultado.getString("Cantidad")));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -125,6 +131,53 @@ public class Conexion {
         return mProducto;       
     }
     
+    public ArrayList ConsultaTodoProducto() {
+        
+        ArrayList mListaProducto = new ArrayList();
+        Producto mProducto=null;
+        Statement consulta;
+        ResultSet resultado;
+        
+        try {
+            consulta = con.createStatement();
+            resultado = consulta.executeQuery("select * from Producto;");
+            while (resultado.next()) {
+                mProducto = new Producto();
+                mProducto.setIDProducto(resultado.getInt("IdProducto"));
+                mProducto.setNombreProducto(resultado.getString("Nombre"));
+                mProducto.setPrecioProducto(resultado.getFloat("Precio"));
+                mProducto.setFechaCaducidad(resultado.getString("FechaCaducidad"));
+                mProducto.setProveedor_idProveedor(resultado.getString("Proveedor_idProveedor"));
+                mProducto.setCantidadProducto(Float.parseFloat(resultado.getString("Cantidad")));
+                mListaProducto.add(mProducto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mListaProducto;
+        /*
+        ArrayList mListaProducto = new ArrayList();
+        Producto mProducto = null;
+        Statement consulta;
+        ResultSet resultado;      
+        try {
+            consulta = con.createStatement();
+            resultado = consulta.executeQuery("select * from Producto " +
+                        "where idProducto " + ">0" + ";");
+            if (resultado.next()) {
+                mProducto = new Producto();
+                mProducto.setIDProducto(resultado.getInt("idProducto"));
+                mProducto.setNombreProducto(resultado.getString("Nombre"));
+                mProducto.setPrecioProducto(Float.parseFloat(resultado.getString("Precio")));
+                mListaProducto.add(mProducto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mListaProducto;
+        */
+      }
+        
     //-------------- ABCC Proveedor
     public boolean AltaProveedor(Proveedor mProveedor) {
         Statement consulta;
@@ -186,7 +239,7 @@ public class Conexion {
             
         return mProveedor;       
     }
-      public ArrayList ConsultaProveedor() {
+      public ArrayList ConsultaTodoProveedor() {
         ArrayList mLista = new ArrayList();
         Proveedor mProveedor=null;
         Statement consulta;
@@ -194,7 +247,7 @@ public class Conexion {
         
         try {
             consulta = con.createStatement();
-            resultado = consulta.executeQuery("select * from alta;");
+            resultado = consulta.executeQuery("select * from Proveedor;");
             while (resultado.next()) {
                 mProveedor = new Proveedor();
                 mProveedor.setIdProveedor(resultado.getInt("IdProveedor"));
