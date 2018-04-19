@@ -1,3 +1,7 @@
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,6 +20,7 @@ public class CambiosProveedor extends javax.swing.JFrame {
      */
     Conexion mConexion = new Conexion();
     Proveedor mProveedor = new Proveedor();
+    DefaultTableModel Tabla = new DefaultTableModel(); int ContadorColumna = 1;
     public CambiosProveedor() {
         initComponents();
     }
@@ -36,6 +41,8 @@ public class CambiosProveedor extends javax.swing.JFrame {
         TBLDetallesProveedor = new javax.swing.JTable();
         BTNModificar = new javax.swing.JButton();
         BTNSalir = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        TXTNombreProveedor = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,6 +55,11 @@ public class CambiosProveedor extends javax.swing.JFrame {
         });
 
         BTNBuscar.setText("Buscar");
+        BTNBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNBuscarActionPerformed(evt);
+            }
+        });
 
         TBLDetallesProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -73,24 +85,29 @@ public class CambiosProveedor extends javax.swing.JFrame {
             }
         });
 
+        jLabel2.setText("Nombre:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(23, 23, 23)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
-                        .addComponent(TXTIdProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(TXTIdProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 458, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(BTNModificar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BTNBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(BTNSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(BTNBuscar, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                        .addComponent(BTNSalir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2)
+                    .addComponent(BTNModificar)
+                    .addComponent(TXTNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -103,11 +120,15 @@ public class CambiosProveedor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(BTNModificar)
+                        .addComponent(BTNSalir)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BTNSalir))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(16, Short.MAX_VALUE))
+                        .addComponent(TXTNombreProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(BTNModificar))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
 
         pack();
@@ -118,28 +139,69 @@ public class CambiosProveedor extends javax.swing.JFrame {
     }//GEN-LAST:event_TXTIdProveedorActionPerformed
 
     private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
-        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
-        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_BTNSalirActionPerformed
 
     private void BTNModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNModificarActionPerformed
         // TODO add your handling code here:
         Proveedor nProveedor = new Proveedor();
         mProveedor.setIdProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
-        //nProveedor.setNombre(this.TBLDetallesProveedor.getColumnName(NORMAL));
+        nProveedor.setNombre(this.TXTNombreProveedor.getText());
         if (mConexion.con())
             {
                 if (mConexion.CambiosProveedor(mProveedor, nProveedor))
                 {
-                    System.out.println("El Videojuego fue modificado con éxito");
+                    JOptionPane.showMessageDialog(null,"El proveedor fue modificado con éxito");
                 }
                 else
                 {
-                    System.out.println("Error al modificar el Videojuego");
+                    JOptionPane.showMessageDialog(null,"Error al modificar el proveedor");
                 }
                 mConexion.desconectar();
             }
+        TXTNombreProveedor.setText("");
     }//GEN-LAST:event_BTNModificarActionPerformed
+
+    private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
+        // TODO add your handling code here:
+        if(mConexion.con()){
+            Proveedor mProveedor = mConexion.ConsultaProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
+            String [] Datos;
+            
+        
+            if (mProveedor != null) {
+                if(ContadorColumna == 1) {
+                Tabla.addColumn("IdProveedor");
+                Tabla.addColumn("NombreProveedor");
+
+                ContadorColumna=2;
+                }
+                       
+                Datos = new String[2];
+                
+                Datos[0] = ""+ mProveedor.getIdProveedor();
+                Datos[1] = mProveedor.getNombre();
+                
+                TXTNombreProveedor.setText(mProveedor.getNombre());
+
+                Tabla.addRow(Datos);
+            } else {
+                // No hay datos
+                JOptionPane.showMessageDialog(null,"No existe ese Proveedor...");
+            }
+            this.TBLDetallesProveedor = new javax.swing.JTable();
+            this.TBLDetallesProveedor.setModel(Tabla);
+            this.TBLDetallesProveedor.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.TBLDetallesProveedor.getColumnModel().getColumn(1).setPreferredWidth(100);
+            if (this.TBLDetallesProveedor.getRowCount() > 0) {
+                this.TBLDetallesProveedor.setRowSelectionInterval(0, 0);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null,"Error al consultar");
+                }
+            mConexion.desconectar();
+    }//GEN-LAST:event_BTNBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,7 +259,9 @@ public class CambiosProveedor extends javax.swing.JFrame {
     private javax.swing.JButton BTNSalir;
     private javax.swing.JTable TBLDetallesProveedor;
     private javax.swing.JTextField TXTIdProveedor;
+    private javax.swing.JTextField TXTNombreProveedor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

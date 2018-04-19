@@ -16,6 +16,7 @@ public class Producto {
     public int IDProducto;
     public String NombreProducto;
     public float PrecioProducto;
+    public float CantidadProducto;
     public String FechaCaducidad;
     public String Proveedor_idProveedor;
 
@@ -27,6 +28,16 @@ public class Producto {
         this.IDProducto = IDProducto;
     }
 
+    public float getCantidadProducto() {
+        return CantidadProducto;
+    }
+
+    public void setCantidadProducto(float CantidadProducto) {
+        this.CantidadProducto = CantidadProducto;
+    }
+
+    
+    
     public String getNombreProducto() {
         return NombreProducto;
     }

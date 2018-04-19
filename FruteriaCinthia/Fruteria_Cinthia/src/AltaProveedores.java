@@ -1,3 +1,6 @@
+
+import javax.swing.JOptionPane;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -101,19 +104,19 @@ public class AltaProveedores extends javax.swing.JFrame {
         {
             if (mConexion.AltaProveedor(mProveedor))
             {
-                System.out.println("El Videojuego fue guardado con éxito");
+                JOptionPane.showMessageDialog(null,"El Proveedor fue guardado con éxito");
             }
             else
             {
-                System.out.println("Error al guardar el Videojuego");
+                JOptionPane.showMessageDialog(null,"Error al guardar el Proveedor");
             }
             mConexion.desconectar();
         }
     }//GEN-LAST:event_BTNGuardarActionPerformed
 
     private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
-        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
-        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+       // TODO add your handling code here:
+       dispose();
     }//GEN-LAST:event_BTNSalirActionPerformed
 
     /**
