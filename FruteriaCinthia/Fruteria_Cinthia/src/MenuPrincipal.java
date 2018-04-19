@@ -203,14 +203,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void ReporteExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteExistenciaActionPerformed
         // TODO add your handling code here:
-       //ReporteDeExistencias FRMReporteDeExistencias = new ReporteDeExistencias();
-       //FRMReporteDeExistencias.setVisible(true);
+       ReporteDeExistencias FRMReporteDeExistencias = new ReporteDeExistencias();
+       FRMReporteDeExistencias.setVisible(true);
     }//GEN-LAST:event_ReporteExistenciaActionPerformed
 
     private void ReporteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteVentaActionPerformed
         // TODO add your handling code here:
-        //ReporteDeVentas FRMReporteDeVentas = new ReporteDeVentas();
-        //FRMReporteDeVentas.setVisible(true);
+        ReporteDeVentas FRMReporteDeVentas = new ReporteDeVentas();
+        FRMReporteDeVentas.setVisible(true);
     }//GEN-LAST:event_ReporteVentaActionPerformed
 
     /**
