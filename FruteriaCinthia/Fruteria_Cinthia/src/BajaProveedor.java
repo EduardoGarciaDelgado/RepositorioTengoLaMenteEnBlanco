@@ -1,3 +1,7 @@
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,6 +20,7 @@ public class BajaProveedor extends javax.swing.JFrame {
      */
     Conexion mConexion = new Conexion();
     Proveedor mProveedor = new Proveedor();
+    DefaultTableModel Tabla = new DefaultTableModel(); int ContadorColumna = 1;
     public BajaProveedor() {
         initComponents();
     }
@@ -35,13 +40,18 @@ public class BajaProveedor extends javax.swing.JFrame {
         BTNeliminar = new javax.swing.JButton();
         BTNsalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        TXTDetallesProveedor = new javax.swing.JTable();
+        TBLDetallesProveedor = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Ingrese el ID del Proveedor:");
 
         BTNBuscar.setText("Buscar");
+        BTNBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNBuscarActionPerformed(evt);
+            }
+        });
 
         BTNeliminar.setText("Eliminar");
         BTNeliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -57,7 +67,7 @@ public class BajaProveedor extends javax.swing.JFrame {
             }
         });
 
-        TXTDetallesProveedor.setModel(new javax.swing.table.DefaultTableModel(
+        TBLDetallesProveedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -68,7 +78,7 @@ public class BajaProveedor extends javax.swing.JFrame {
                 "ID Proveedor", "Nombre"
             }
         ));
-        jScrollPane1.setViewportView(TXTDetallesProveedor);
+        jScrollPane1.setViewportView(TBLDetallesProveedor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,8 +125,8 @@ public class BajaProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BTNsalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNsalirActionPerformed
-        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
-        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_BTNsalirActionPerformed
 
     private void BTNeliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNeliminarActionPerformed
@@ -127,15 +137,52 @@ public class BajaProveedor extends javax.swing.JFrame {
             mProveedor.setIdProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
             if (mConexion.BajaProveedor(mProveedor))
             {
-                System.out.println("Videojuego eliminado con éxito");
+                JOptionPane.showMessageDialog(null,"Proveedor eliminado con éxito");
             }
             else
             {
-                System.out.println("Error al eliminar Videojuego");
+                JOptionPane.showMessageDialog(null,"Error al eliminar Proveedor");
             }
             mConexion.desconectar();
         }
     }//GEN-LAST:event_BTNeliminarActionPerformed
+
+    private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
+        // TODO add your handling code here:
+        if(mConexion.con()){
+            Proveedor mProveedor = mConexion.ConsultaProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
+            String [] Datos;
+            
+        
+            if (mProveedor != null) {
+                if(ContadorColumna == 1) {
+                Tabla.addColumn("IdProveedor");
+                Tabla.addColumn("NombreProveedor");
+                ContadorColumna=2;
+                }
+                       
+                Datos = new String[2];
+                
+                Datos[0] = ""+ mProveedor.getIdProveedor();
+                Datos[1] = mProveedor.getNombre();
+            
+                Tabla.addRow(Datos);
+            } else {
+                // No hay datos
+                JOptionPane.showMessageDialog(null,"No existe ese Proveedor...");
+            }
+            this.TBLDetallesProveedor = new javax.swing.JTable();
+            this.TBLDetallesProveedor.setModel(Tabla);
+            this.TBLDetallesProveedor.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.TBLDetallesProveedor.getColumnModel().getColumn(1).setPreferredWidth(100);
+            if (this.TBLDetallesProveedor.getRowCount() > 0) {
+                this.TBLDetallesProveedor.setRowSelectionInterval(0, 0);
+            }
+            } else {
+                JOptionPane.showMessageDialog(null,"Error al consultar");
+                }
+            mConexion.desconectar();
+    }//GEN-LAST:event_BTNBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -179,7 +226,7 @@ public class BajaProveedor extends javax.swing.JFrame {
     private javax.swing.JButton BTNBuscar;
     private javax.swing.JButton BTNeliminar;
     private javax.swing.JButton BTNsalir;
-    private javax.swing.JTable TXTDetallesProveedor;
+    private javax.swing.JTable TBLDetallesProveedor;
     private javax.swing.JTextField TXTIdProveedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

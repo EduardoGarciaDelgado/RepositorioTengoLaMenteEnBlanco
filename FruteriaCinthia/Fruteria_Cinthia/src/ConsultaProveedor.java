@@ -1,4 +1,6 @@
 
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -21,6 +23,7 @@ public class ConsultaProveedor extends javax.swing.JFrame {
     DefaultTableModel Tabla = new DefaultTableModel();
     Conexion mConexion = new Conexion();
     Proveedor mProveedor = new Proveedor();
+    int ContadorColumna = 1;
     public ConsultaProveedor() {
         initComponents();
     }
@@ -39,6 +42,7 @@ public class ConsultaProveedor extends javax.swing.JFrame {
         BTNSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         TBLDetalleProveedor = new javax.swing.JTable();
+        BTNBuscarUno = new javax.swing.JButton();
         BTNBuscar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,7 +69,14 @@ public class ConsultaProveedor extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(TBLDetalleProveedor);
 
-        BTNBuscar.setText("Buscar");
+        BTNBuscarUno.setText("Buscar por ID");
+        BTNBuscarUno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNBuscarUnoActionPerformed(evt);
+            }
+        });
+
+        BTNBuscar.setText("Buscar Todo");
         BTNBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTNBuscarActionPerformed(evt);
@@ -77,7 +88,7 @@ public class ConsultaProveedor extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(33, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
@@ -87,6 +98,7 @@ public class ConsultaProveedor extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BTNSalir)
+                    .addComponent(BTNBuscarUno)
                     .addComponent(BTNBuscar))
                 .addGap(36, 36, 36))
         );
@@ -97,11 +109,14 @@ public class ConsultaProveedor extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(TXTIdProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTNBuscar))
+                    .addComponent(BTNBuscarUno))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BTNSalir))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(BTNBuscar)
+                        .addGap(18, 18, 18)
+                        .addComponent(BTNSalir)))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
@@ -109,29 +124,34 @@ public class ConsultaProveedor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
-        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
-        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_BTNSalirActionPerformed
 
-    private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
+    private void BTNBuscarUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarUnoActionPerformed
         // TODO add your handling code here:
-        if(mConexion.con()){
+        DefaultTableModel TablaLimpiar = (DefaultTableModel) TBLDetalleProveedor.getModel();
+        int a = TBLDetalleProveedor.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            TablaLimpiar.removeRow(TablaLimpiar.getRowCount() - 1);
+        }
+        if (mConexion.con()) {
             Proveedor mProveedor = mConexion.ConsultaProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
-            String [] Datos;
-        
+            String[] Datos;
+
             if (mProveedor != null) {
                 Tabla.addColumn("IdProveedor");
                 Tabla.addColumn("NombreProveedor");
-                       
+
                 Datos = new String[2];
-                
+
                 Datos[0] = "" + mProveedor.getIdProveedor();
                 Datos[1] = mProveedor.getNombre();
-            
+
                 Tabla.addRow(Datos);
             } else {
                 // No hay datos
-                System.err.println("No existe ese Proveedor...");
+                JOptionPane.showMessageDialog(null, "No existe ese Proveedor...");
             }
             this.TBLDetalleProveedor = new javax.swing.JTable();
             this.TBLDetalleProveedor.setModel(Tabla);
@@ -139,11 +159,54 @@ public class ConsultaProveedor extends javax.swing.JFrame {
             this.TBLDetalleProveedor.getColumnModel().getColumn(1).setPreferredWidth(100);
             if (this.TBLDetalleProveedor.getRowCount() > 0) {
                 this.TBLDetalleProveedor.setRowSelectionInterval(0, 0);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al consultar");
+        }
+        mConexion.desconectar();
+    }//GEN-LAST:event_BTNBuscarUnoActionPerformed
+
+    private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel TablaLimpiar = (DefaultTableModel) TBLDetalleProveedor.getModel();
+        int a = TBLDetalleProveedor.getRowCount()-1;
+        for(int i = a; i>=0;i--) {
+            TablaLimpiar.removeRow(TablaLimpiar.getRowCount()-1);
+        }
+        
+        if (mConexion.con()) {
+            ArrayList mArrayList = new ArrayList();
+            mArrayList = mConexion.ConsultaTodoProveedor();
+            String[] Datos = null;
+            if (mArrayList != null) {
+                if (ContadorColumna == 1) {
+                    Tabla.addColumn("IdProveedor");
+                    Tabla.addColumn("NombreProveedor");
+                    ContadorColumna = 2;
                 }
+                for (int i = 0; i < mArrayList.size(); i++) {
+                    mProveedor = (Proveedor) mArrayList.get(i);
+                    Datos = new String[2];
+                    Datos[0] = "" + mProveedor.getIdProveedor();
+                    Datos[1] = mProveedor.getNombre();
+                    Tabla.addRow(Datos);
+                }
+
             } else {
-                System.err.println("Error al consultar");
-                }
-            mConexion.desconectar();
+                JOptionPane.showMessageDialog(null, "No existe ese Proveedor...");
+            }
+            this.TBLDetalleProveedor = new javax.swing.JTable();
+            this.TBLDetalleProveedor.setModel(Tabla);
+            this.TBLDetalleProveedor.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.TBLDetalleProveedor.getColumnModel().getColumn(1).setPreferredWidth(100);
+            if (this.TBLDetalleProveedor.getRowCount() > 0) {
+                this.TBLDetalleProveedor.setRowSelectionInterval(0, 0);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al consultar");
+        }
+        mConexion.desconectar();
     }//GEN-LAST:event_BTNBuscarActionPerformed
 
     /**
@@ -184,6 +247,7 @@ public class ConsultaProveedor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNBuscar;
+    private javax.swing.JButton BTNBuscarUno;
     private javax.swing.JButton BTNSalir;
     private javax.swing.JTable TBLDetalleProveedor;
     private javax.swing.JTextField TXTIdProveedor;

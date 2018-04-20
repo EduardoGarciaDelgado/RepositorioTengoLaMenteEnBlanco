@@ -149,11 +149,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 663, Short.MAX_VALUE)
+            .addGap(0, 1029, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addGap(0, 593, Short.MAX_VALUE)
         );
 
         pack();
@@ -203,14 +203,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     private void ReporteExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteExistenciaActionPerformed
         // TODO add your handling code here:
-       //ReporteDeExistencias FRMReporteDeExistencias = new ReporteDeExistencias();
-       //FRMReporteDeExistencias.setVisible(true);
+       ReporteDeExistencias FRMReporteDeExistencias = new ReporteDeExistencias();
+       FRMReporteDeExistencias.setVisible(true);
     }//GEN-LAST:event_ReporteExistenciaActionPerformed
 
     private void ReporteVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteVentaActionPerformed
         // TODO add your handling code here:
-        //ReporteDeVentas FRMReporteDeVentas = new ReporteDeVentas();
-        //FRMReporteDeVentas.setVisible(true);
+        ReporteDeVentas FRMReporteDeVentas = new ReporteDeVentas();
+        FRMReporteDeVentas.setVisible(true);
     }//GEN-LAST:event_ReporteVentaActionPerformed
 
     private void MenuConsultasProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuConsultasProductosActionPerformed
