@@ -1,3 +1,9 @@
+
+import java.io.*;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,9 +19,90 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
     /**
      * Creates new form ReporteDeExistencias
      */
+    Conexion mConexion = new Conexion();
+    Producto mProducto = new Producto();
+    DefaultTableModel Tabla = new DefaultTableModel();
+    int ContadorColumna = 1;
     public ReporteDeExistencias() {
         initComponents();
+        DefaultTableModel TablaLimpiar = (DefaultTableModel) TableReporteDeExistencias.getModel();
+        int a = TableReporteDeExistencias.getRowCount()-1;
+        for(int i = a; i>=0;i--) {
+            TablaLimpiar.removeRow(TablaLimpiar.getRowCount()-1);
+        }
         
+        if (mConexion.con()) {
+            ArrayList mArrayList = new ArrayList();
+            mArrayList = mConexion.ConsultaTodoProducto();
+            String[] Datos = null;
+            if (mArrayList != null) {
+                if (ContadorColumna == 1) {
+                    Tabla.addColumn("ID");
+                    Tabla.addColumn("Nombre");
+                    Tabla.addColumn("Precio");
+                    Tabla.addColumn("Fecha Caducidad");
+                    Tabla.addColumn("ID Proveedor");
+                    Tabla.addColumn("Cantidad");
+                    ContadorColumna = 2;
+                }
+                for (int i = 0; i < mArrayList.size(); i++) {
+                    mProducto = (Producto) mArrayList.get(i);
+                    Datos = new String[6];
+                    Datos[0] = "" + mProducto.getIDProducto();
+                    Datos[1] = mProducto.getNombreProducto();
+                    Datos[2] = "" + mProducto.getPrecioProducto();
+                    Datos[3] = mProducto.getFechaCaducidad();
+                    Datos[4] = "" + mProducto.getProveedor_idProveedor();
+                    Datos[5] = "" + mProducto.getCantidadProducto();
+                    Tabla.addRow(Datos);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe ese Producto...");
+            }
+            this.TableReporteDeExistencias = new javax.swing.JTable();
+            this.TableReporteDeExistencias.setModel(Tabla);
+            this.TableReporteDeExistencias.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.TableReporteDeExistencias.getColumnModel().getColumn(1).setPreferredWidth(100);
+            this.TableReporteDeExistencias.getColumnModel().getColumn(2).setPreferredWidth(400);
+            this.TableReporteDeExistencias.getColumnModel().getColumn(3).setPreferredWidth(600);
+            this.TableReporteDeExistencias.getColumnModel().getColumn(4).setPreferredWidth(400);
+            this.TableReporteDeExistencias.getColumnModel().getColumn(5).setPreferredWidth(100);
+            if (this.TableReporteDeExistencias.getRowCount() > 0) {
+                this.TableReporteDeExistencias.setRowSelectionInterval(0, 0);
+            }
+            
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al consultar");
+        }
+        mConexion.desconectar();
+    }
+    
+    private void guardaTabla(){
+        try {
+
+            String sucursalesCSVFile = "/Users/macbookair/RepositorioTengoLaMenteEnBlanco/FruteriaCinthia/Fruteria_Cinthia/TablaReporteExistencia.csv";
+            BufferedWriter mBufferedWriter = new BufferedWriter(new FileWriter(sucursalesCSVFile ));
+            
+            mBufferedWriter.write("idProducto,Nombre,Precio,Fecha,ID Proveedor,Cantidad");
+            mBufferedWriter.newLine(); //inserta nueva linea.
+            for (int i = 0 ; i < TableReporteDeExistencias.getRowCount(); i++) //realiza un barrido por filas.
+            {
+                for(int j = 0 ; j < TableReporteDeExistencias.getColumnCount();j++) //realiza un barrido por columnas.
+                {
+                    mBufferedWriter.write((String)(TableReporteDeExistencias.getValueAt(i,j)));
+                    if (j < TableReporteDeExistencias.getColumnCount() -1) { //agrega separador "," si no es el ultimo elemento de la fila.
+                        mBufferedWriter.write(",");
+                    }
+                }
+                mBufferedWriter.newLine(); //inserta nueva linea.
+            }
+
+            mBufferedWriter.close(); //cierra archivo!
+            JOptionPane.showMessageDialog(null, "Reporte guardado correctamente");
+        } catch (IOException e) {
+            System.out.println("ERROR: Ocurrio un problema al guardar el reporte" + e.getMessage());
+        }
     }
 
     /**
@@ -30,23 +117,24 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         TableReporteDeExistencias = new javax.swing.JTable();
         BTNSalir = new javax.swing.JButton();
+        BTNGuardarReporteExistencia = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        TableReporteDeExistencias.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID_PRODUCTO", "NOMBRE", "CANTIDAD"
-            }
-        ));
+        TableReporteDeExistencias.setModel(Tabla);
         jScrollPane1.setViewportView(TableReporteDeExistencias);
 
         BTNSalir.setText("Salir");
         BTNSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BTNSalirActionPerformed(evt);
+            }
+        });
+
+        BTNGuardarReporteExistencia.setText("Guardar Reporte");
+        BTNGuardarReporteExistencia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNGuardarReporteExistenciaActionPerformed(evt);
             }
         });
 
@@ -57,8 +145,10 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BTNSalir)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(BTNSalir)
+                    .addComponent(BTNGuardarReporteExistencia))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -67,8 +157,10 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(BTNGuardarReporteExistencia)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BTNSalir)
-                .addContainerGap(266, Short.MAX_VALUE))
+                .addContainerGap(231, Short.MAX_VALUE))
         );
 
         pack();
@@ -76,9 +168,14 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
 
     private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
         // TODO add your handling code here:
-        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
-        FRMMenuPrincipal.setVisible(true);
+        dispose();
     }//GEN-LAST:event_BTNSalirActionPerformed
+
+    private void BTNGuardarReporteExistenciaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNGuardarReporteExistenciaActionPerformed
+        // TODO add your handling code here:
+        ReporteDeExistencias mReporte = new ReporteDeExistencias();
+        mReporte.guardaTabla();
+    }//GEN-LAST:event_BTNGuardarReporteExistenciaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,6 +213,7 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BTNGuardarReporteExistencia;
     private javax.swing.JButton BTNSalir;
     private javax.swing.JTable TableReporteDeExistencias;
     private javax.swing.JScrollPane jScrollPane1;

@@ -61,14 +61,7 @@ public class CambiosProveedor extends javax.swing.JFrame {
             }
         });
 
-        TBLDetallesProveedor.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "ID Proveedor", "Nombre"
-            }
-        ));
+        TBLDetallesProveedor.setModel(Tabla);
         jScrollPane1.setViewportView(TBLDetallesProveedor);
 
         BTNModificar.setText("Modificar");

@@ -56,17 +56,7 @@ public class ConsultaProveedor extends javax.swing.JFrame {
             }
         });
 
-        TBLDetalleProveedor.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID_Proveedor", "Nombre"
-            }
-        ));
+        TBLDetalleProveedor.setModel(Tabla);
         jScrollPane1.setViewportView(TBLDetalleProveedor);
 
         BTNBuscarUno.setText("Buscar por ID");
@@ -140,8 +130,12 @@ public class ConsultaProveedor extends javax.swing.JFrame {
             String[] Datos;
 
             if (mProveedor != null) {
+                if(ContadorColumna == 1) {
                 Tabla.addColumn("IdProveedor");
                 Tabla.addColumn("NombreProveedor");
+
+                ContadorColumna=2;
+                }
 
                 Datos = new String[2];
 

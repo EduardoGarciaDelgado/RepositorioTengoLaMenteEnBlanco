@@ -67,17 +67,7 @@ public class BajaProveedor extends javax.swing.JFrame {
             }
         });
 
-        TBLDetallesProveedor.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "ID Proveedor", "Nombre"
-            }
-        ));
+        TBLDetallesProveedor.setModel(Tabla);
         jScrollPane1.setViewportView(TBLDetallesProveedor);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

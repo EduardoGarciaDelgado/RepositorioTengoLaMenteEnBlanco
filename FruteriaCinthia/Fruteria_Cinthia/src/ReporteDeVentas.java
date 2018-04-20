@@ -76,8 +76,7 @@ public class ReporteDeVentas extends javax.swing.JFrame {
 
     private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
         // TODO add your handling code here:
-        MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
-        FRMMenuPrincipal.setVisible(true);
+        dispose();
     }//GEN-LAST:event_BTNSalirActionPerformed
 
     /**

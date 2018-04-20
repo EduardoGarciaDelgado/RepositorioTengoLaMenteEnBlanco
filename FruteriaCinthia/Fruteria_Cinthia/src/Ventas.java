@@ -106,8 +106,7 @@ public class Ventas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-MenuPrincipal FRMMenuPrincipal = new MenuPrincipal();
-        FRMMenuPrincipal.setVisible(true);        // TODO add your handling code here:
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
