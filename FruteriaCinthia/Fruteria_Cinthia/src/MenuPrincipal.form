@@ -109,6 +109,9 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="COMPRAS"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="MenuComprasMouseClicked"/>
+          </Events>
         </Menu>
         <Menu class="javax.swing.JMenu" name="MenuVentas">
           <Properties>

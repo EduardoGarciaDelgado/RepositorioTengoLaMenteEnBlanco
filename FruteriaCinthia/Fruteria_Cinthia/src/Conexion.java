@@ -155,27 +155,6 @@ public class Conexion {
             e.printStackTrace();
         }
         return mListaProducto;
-        /*
-        ArrayList mListaProducto = new ArrayList();
-        Producto mProducto = null;
-        Statement consulta;
-        ResultSet resultado;      
-        try {
-            consulta = con.createStatement();
-            resultado = consulta.executeQuery("select * from Producto " +
-                        "where idProducto " + ">0" + ";");
-            if (resultado.next()) {
-                mProducto = new Producto();
-                mProducto.setIDProducto(resultado.getInt("idProducto"));
-                mProducto.setNombreProducto(resultado.getString("Nombre"));
-                mProducto.setPrecioProducto(Float.parseFloat(resultado.getString("Precio")));
-                mListaProducto.add(mProducto);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return mListaProducto;
-        */
       }
         
     //-------------- ABCC Proveedor
@@ -239,7 +218,7 @@ public class Conexion {
             
         return mProveedor;       
     }
-      public ArrayList ConsultaTodoProveedor() {
+    public ArrayList ConsultaTodoProveedor() {
         ArrayList mLista = new ArrayList();
         Proveedor mProveedor=null;
         Statement consulta;
@@ -259,5 +238,89 @@ public class Conexion {
         }
         return mLista;
       }
+      
+    //----------------------------- Compras
+    public boolean AltaCompra(Compra mCompra) {
+        Statement consulta;
+        try {
+            consulta = con.createStatement();
+            consulta.execute("insert into Compra "  +
+                        "values (null,'" + mCompra.getFechaCompra() + "', '" + mCompra.getPrecioTotalCompra()+ "');");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean AltaDetalleCompra(DetalleCompra mDetalleCompra) {
+        Statement consulta;
+        try {
+            consulta = con.createStatement();
+            consulta.execute("insert into Detalle_Compras " + 
+                        "(idDetalle_Compras, Cantidad, Precio, Producto_idProducto, Proveedor_idProveedor, Compra_idCompra) " +
+                        "values (null,'" + mDetalleCompra.getCantidad() + "','" 
+                                        + mDetalleCompra.getPrecio() + "','" 
+                                        + mDetalleCompra.getProducto_idProducto() + "','"
+                                        + mDetalleCompra.getProveedor_idProveedor() + "','"
+                                        + mDetalleCompra.getCompra_idCompra() + "');");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }   
+    public boolean CambiosCompra(Compra mCompra, Compra nCompra) {
+        Statement consulta;
+        try {
+            consulta = con.createStatement();
+            consulta.execute("update Compra set " + 
+                        "PrecioTotalCompra = '" + nCompra.getPrecioTotalCompra() + "'" +
+                        " where IdCompra = " + mCompra.getIdCompra() + ";");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }     
+        
+    }       
+    public Compra ConsultaTodaCompra(int ID) {
+        Compra mCompra=null;
+        Statement consulta;
+        ResultSet resultado;
+        try {
+            consulta = con.createStatement();
+            resultado = consulta.executeQuery("select * from Compra " +
+                        "where IdCompra = " + ID + ";");
+            if (resultado.next()) {
+                mCompra = new Compra();
+                mCompra.setIdCompra(resultado.getInt("IdCompra"));
+                mCompra.setFechaCompra(resultado.getString("FechaCompra"));
+                mCompra.setPrecioTotalCompra(Float.parseFloat(resultado.getString("PrecioTotalCompra")));            
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mCompra;
+      }  
+    public int ConsultaIDCompra() {
+        ArrayList mLista = new ArrayList();
+        Compra mCompra=null;
+        Statement consulta;
+        ResultSet resultado;
+        int RegistroUltimo=0;
+        
+        try {
+            consulta = con.createStatement();
+            resultado = consulta.executeQuery("SELECT MAX(idCompra) FROM Compra;");
+            while (resultado.next()) {
+                RegistroUltimo = resultado.getInt("MAX(idCompra)");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return RegistroUltimo;
+      }
+    
+    //----------------------------- Ventas
     
 }

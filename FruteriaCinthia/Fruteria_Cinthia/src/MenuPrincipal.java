@@ -138,6 +138,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(MenuReportes);
 
         MenuCompras.setText("COMPRAS");
+        MenuCompras.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                MenuComprasMouseClicked(evt);
+            }
+        });
         jMenuBar1.add(MenuCompras);
 
         MenuVentas.setText("VENTAS");
@@ -218,6 +223,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         ConsultaProductos mConsultaProductos = new ConsultaProductos();
         mConsultaProductos.show();
     }//GEN-LAST:event_MenuConsultasProductosActionPerformed
+
+    private void MenuComprasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MenuComprasMouseClicked
+        // TODO add your handling code here:
+        Compras mCompras = new Compras();
+        mCompras.show();
+    }//GEN-LAST:event_MenuComprasMouseClicked
 
     /**
      * @param args the command line arguments
