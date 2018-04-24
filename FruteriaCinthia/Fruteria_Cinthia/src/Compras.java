@@ -485,8 +485,8 @@ public class Compras extends javax.swing.JFrame {
 
                 Compra mCompraConsultada = mConexion.ConsultaTodaCompra(mCompra.getIdCompra());
                 
-                mDetalleCompra.setCantidad(CantidadNueva);
-                mDetalleCompra.setPrecio(mProducto.getPrecioProducto());
+                mDetalleCompra.setCantidad(Float.parseFloat(TXTCantidadNueva.getText()));              
+                mDetalleCompra.setPrecio(Float.parseFloat(LBLPrecio.getText()));
                 mDetalleCompra.setProducto_idProducto(mProducto.getIDProducto());
                 mDetalleCompra.setProveedor_idProveedor(mProveedor.getIdProveedor());
                 mDetalleCompra.setCompra_idCompra(RegistroCompra);
