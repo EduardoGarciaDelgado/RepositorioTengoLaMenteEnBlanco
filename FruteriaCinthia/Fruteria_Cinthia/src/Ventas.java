@@ -1,3 +1,10 @@
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,8 +20,46 @@ public class Ventas extends javax.swing.JFrame {
     /**
      * Creates new form Ventas
      */
+    float TotalCompleto = 0;
+    float TotalTemporal = 0;
+    int RegistroVenta = 0;
+    float ResultadoVentaTotal = 0;
+    float CantidadNueva = 0;
+    Conexion mConexion = new Conexion();
+    Venta mVenta = new Venta();
+    DetalleVenta mDetalleVenta = new DetalleVenta();
+    Producto mProducto = new Producto();
+    DefaultTableModel Tabla = new DefaultTableModel();
+    DefaultTableModel TablaProveedores = new DefaultTableModel();
+    Calendar fecha = new GregorianCalendar();
+    int ContadorColumna = 1; int ContadorColumnaProveedor = 1;
+    
     public Ventas() {
         initComponents();
+        //AQUI AGREGO VENTA
+            String FechaActual = "" + fecha.get(Calendar.YEAR) +"-"+ fecha.get(Calendar.MONTH) +"-"+ fecha.get(Calendar.DAY_OF_MONTH);
+            System.out.println();
+            mVenta.setFechaVenta(FechaActual);
+            mVenta.setPrecioTotalVenta(ResultadoVentaTotal);
+            if(mConexion.con()) {
+               if (mConexion.AltaVenta(mVenta))
+                {
+                    JOptionPane.showMessageDialog(null,"LISTO PARA GENERAR VENTA");
+                    RegistroVenta = (mConexion.ConsultaIDCompra()); 
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"Error al guardar Venta");
+                }
+            }
+        //------------------
+        
+        else {
+            JOptionPane.showMessageDialog(null, "Error al consultar");
+        }
+       
+        mConexion.desconectar();
+            
     }
 
     /**
@@ -27,11 +72,25 @@ public class Ventas extends javax.swing.JFrame {
     private void initComponents() {
 
         jDialog1 = new javax.swing.JDialog();
-        LBLTotalVentas = new java.awt.Label();
-        TXTTotalVentas = new java.awt.TextField();
+        BTNBuscarTodo = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        TXTCantidadNueva = new javax.swing.JTextField();
+        LBLPrecio = new javax.swing.JLabel();
+        TXTGuardarVenta = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TBLVentas = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        TXTFinalizarVenta = new javax.swing.JButton();
+        LBLFecha = new javax.swing.JLabel();
+        BTNSalir = new javax.swing.JButton();
+        TXTProductoBuscar = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        LBLNombreProducto1 = new javax.swing.JLabel();
+        BTNBuscarID = new javax.swing.JButton();
+        LBLTotal = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -47,67 +106,364 @@ public class Ventas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
-        LBLTotalVentas.setText("Total:");
-
-        TBLVentas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "ID_Ventas", "Proveedor", "Cantidad", "Producto", "Precio", "SubTotal"
-            }
-        ));
-        jScrollPane1.setViewportView(TBLVentas);
-
-        jButton1.setText("Salir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        BTNBuscarTodo.setText("Buscar Todo");
+        BTNBuscarTodo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                BTNBuscarTodoActionPerformed(evt);
             }
         });
+
+        jLabel2.setText("Nombre:");
+
+        jLabel3.setText("Cantidad a Vender");
+
+        jLabel6.setText("Precio");
+
+        TXTCantidadNueva.setText("0.0");
+        TXTCantidadNueva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TXTCantidadNuevaActionPerformed(evt);
+            }
+        });
+
+        LBLPrecio.setText("******************************");
+
+        TXTGuardarVenta.setText("Guardar Venta");
+        TXTGuardarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TXTGuardarVentaActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setText("Fecha");
+
+        TBLVentas.setModel(Tabla);
+        jScrollPane1.setViewportView(TBLVentas);
+
+        TXTFinalizarVenta.setText("Finalizar Venta");
+        TXTFinalizarVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TXTFinalizarVentaActionPerformed(evt);
+            }
+        });
+
+        LBLFecha.setText("******************************");
+
+        BTNSalir.setText("Salir");
+        BTNSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNSalirActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        jLabel5.setText("TOTAL:");
+
+        jLabel1.setText("ID Producto");
+
+        LBLNombreProducto1.setText("******************************");
+
+        BTNBuscarID.setText("Seleccionar por ID");
+        BTNBuscarID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNBuscarIDActionPerformed(evt);
+            }
+        });
+
+        LBLTotal.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        LBLTotal.setText("0.0");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(BTNBuscarTodo)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(BTNBuscarID))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jLabel7)
+                                                    .addComponent(jLabel6))
+                                                .addGap(80, 80, 80)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(LBLPrecio, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                                                    .addComponent(LBLFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel1)
+                                                .addGap(44, 44, 44)
+                                                .addComponent(TXTProductoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(LBLTotalVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(TXTTotalVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
-                        .addGap(69, 69, 69))))
+                        .addComponent(TXTGuardarVenta)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LBLNombreProducto1, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(TXTCantidadNueva, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(26, 26, 26)
+                                .addComponent(LBLTotal)
+                                .addGap(73, 73, 73)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TXTFinalizarVenta)
+                                    .addComponent(BTNSalir))))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BTNBuscarTodo)
+                    .addComponent(BTNBuscarID))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(LBLTotalVentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(TXTTotalVentas, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
-                        .addComponent(jButton1)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(TXTProductoBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(LBLPrecio))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(LBLFecha)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(LBLNombreProducto1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(TXTCantidadNueva, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(LBLTotal)
+                    .addComponent(TXTFinalizarVenta)
+                    .addComponent(TXTGuardarVenta))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BTNSalir)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void BTNBuscarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarTodoActionPerformed
+        // TODO add your handling code here:
+
+        DefaultTableModel TablaLimpiar = (DefaultTableModel) TBLVentas.getModel();
+        int a = TBLVentas.getRowCount()-1;
+        for(int i = a; i>=0;i--) {
+            TablaLimpiar.removeRow(TablaLimpiar.getRowCount()-1);
+        }
+
+        if (mConexion.con()) {
+            ArrayList mArrayList = new ArrayList();
+            mArrayList = mConexion.ConsultaTodoProducto();
+            String[] Datos = null;
+            if (mArrayList != null) {
+                if (ContadorColumna == 1) {
+                    Tabla.addColumn("ID");
+                    Tabla.addColumn("Nombre");
+                    Tabla.addColumn("Precio");
+                    Tabla.addColumn("Fecha Caducidad");
+                    Tabla.addColumn("Cantidad");
+                    ContadorColumna = 2;
+                }
+                for (int i = 0; i < mArrayList.size(); i++) {
+                    mProducto = (Producto) mArrayList.get(i);
+                    Datos = new String[5];
+                    Datos[0] = "" + mProducto.getIDProducto();
+                    Datos[1] = mProducto.getNombreProducto();
+                    Datos[2] = "" + mProducto.getPrecioProducto();
+                    Datos[3] = mProducto.getFechaCaducidad();
+                    Datos[4] = "" + mProducto.getCantidadProducto();
+
+                    LBLNombreProducto1.setText("******************************");
+                    LBLPrecio.setText("******************************");
+                    LBLFecha.setText("******************************");
+
+                    Tabla.addRow(Datos);
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe ese Producto...");
+            }
+            this.TBLVentas = new javax.swing.JTable();
+            this.TBLVentas.setModel(Tabla);
+            this.TBLVentas.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.TBLVentas.getColumnModel().getColumn(1).setPreferredWidth(100);
+            this.TBLVentas.getColumnModel().getColumn(2).setPreferredWidth(400);
+            this.TBLVentas.getColumnModel().getColumn(3).setPreferredWidth(600);
+            this.TBLVentas.getColumnModel().getColumn(4).setPreferredWidth(400);
+            if (this.TBLVentas.getRowCount() > 0) {
+                this.TBLVentas.setRowSelectionInterval(0, 0);
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al consultar");
+        }
+        mConexion.desconectar();
+    }//GEN-LAST:event_BTNBuscarTodoActionPerformed
+
+    private void TXTCantidadNuevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTCantidadNuevaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TXTCantidadNuevaActionPerformed
+
+    private void TXTGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTGuardarVentaActionPerformed
+        // TODO add your handling code here:
+        Producto nProducto = new Producto();
+        mProducto.setIDProducto(Integer.parseInt(this.TXTProductoBuscar.getText()));
+        mConexion.con();
+        Producto mProductoViejo = mConexion.consultarProducto(Integer.parseInt(this.TXTProductoBuscar.getText()));
+        mConexion.desconectar();
+
+        CantidadNueva = Float.parseFloat(TXTCantidadNueva.getText()) + mProductoViejo.getCantidadProducto();
+        nProducto.setNombreProducto(LBLNombreProducto1.getText());
+        nProducto.setPrecioProducto(Float.parseFloat(LBLPrecio.getText()));
+        nProducto.setFechaCaducidad(LBLFecha.getText());
+        nProducto.setCantidadProducto(CantidadNueva);
+        CantidadNueva=0;
+
+        if (mConexion.con())
+        {
+
+            if (mConexion.modificarProducto(mProducto, nProducto))
+            {
+                JOptionPane.showMessageDialog(null,"PRODUCTOS AÑADIDOS");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"ERROR EN AÑADIR, VUELVE A INTENTARLO");
+            }
+
+            Venta mVentaConsultada = mConexion.ConsultaTodaVenta(mVenta.getIdVenta());
+
+            mDetalleVenta.setCantidad(Float.parseFloat(TXTCantidadNueva.getText()));
+            mDetalleVenta.setPrecio(Float.parseFloat(LBLPrecio.getText()));
+            mDetalleVenta.setProducto_IdProducto(mProducto.getIDProducto());
+            mDetalleVenta.setVenta_IdVenta(RegistroVenta);
+
+            TotalTemporal = Float.parseFloat(LBLPrecio.getText()) * Float.parseFloat(TXTCantidadNueva.getText());
+            TotalCompleto = TotalTemporal - TotalCompleto;
+            LBLTotal.setText(String.valueOf(TotalCompleto));
+
+            if (mConexion.AltaDetalleVenta(mDetalleVenta))
+            {
+                JOptionPane.showMessageDialog(null,"DETALLE DE VENTA GUARDADO");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"Error detalle Venta");
+            }
+        }
+        TXTCantidadNueva.setText("");
+        TXTProductoBuscar.setText("");
+
+        mConexion.desconectar();
+    }//GEN-LAST:event_TXTGuardarVentaActionPerformed
+
+    private void TXTFinalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTFinalizarVentaActionPerformed
+        // TODO add your handling code here:
+        Venta mVentaAlterada = new Venta();
+        mVenta.setIdVenta(RegistroVenta);
+        mVentaAlterada.setPrecioTotalVenta(Float.parseFloat(LBLTotal.getText()));
+        if(mConexion.con())
+        {
+            if (mConexion.CambiosVenta(mVenta, mVentaAlterada))
+            {
+                JOptionPane.showMessageDialog(null,"NUEVO PRECIO EN LA VENTA");
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null,"ERROR EN NUEVO PRECIO");
+            }
+        }
+        mConexion.desconectar();
+    }//GEN-LAST:event_TXTFinalizarVentaActionPerformed
+
+    private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
         dispose();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_BTNSalirActionPerformed
+
+    private void BTNBuscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarIDActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel TablaLimpiar = (DefaultTableModel) TBLVentas.getModel();
+        int a = TBLVentas.getRowCount()-1;
+        for(int i = a; i>=0;i--) {
+            TablaLimpiar.removeRow(TablaLimpiar.getRowCount()-1);
+        }
+
+        if(mConexion.con()){
+            Producto mProducto = mConexion.consultarProducto(Integer.parseInt(this.TXTProductoBuscar.getText()));
+            String [] Datos;
+
+            if (mProducto != null) {
+                if(ContadorColumna == 1) {
+                    Tabla.addColumn("ID");
+                    Tabla.addColumn("Nombre");
+                    Tabla.addColumn("Precio");
+                    Tabla.addColumn("Fecha Caducidad");
+                    Tabla.addColumn("Cantidad");
+                    ContadorColumna=2;
+                }
+
+                Datos = new String[5];
+
+                Datos[0] = ""+ mProducto.getIDProducto();
+                Datos[1] = mProducto.getNombreProducto();
+                Datos[2] = "" + mProducto.getPrecioProducto();
+                Datos[3] = mProducto.getFechaCaducidad();
+                Datos[4] = "" + mProducto.getCantidadProducto();
+
+                LBLNombreProducto1.setText(mProducto.getNombreProducto());
+                LBLPrecio.setText(""+mProducto.getPrecioProducto());
+                LBLFecha.setText(""+mProducto.getFechaCaducidad());
+
+                Tabla.addRow(Datos);
+            } else {
+                // No hay datos
+                JOptionPane.showMessageDialog(null,"No existe ese Producto...");
+            }
+            this.TBLVentas = new javax.swing.JTable();
+            this.TBLVentas.setModel(Tabla);
+            this.TBLVentas.getColumnModel().getColumn(0).setPreferredWidth(50);
+            this.TBLVentas.getColumnModel().getColumn(1).setPreferredWidth(100);
+            this.TBLVentas.getColumnModel().getColumn(2).setPreferredWidth(400);
+            this.TBLVentas.getColumnModel().getColumn(3).setPreferredWidth(600);
+            this.TBLVentas.getColumnModel().getColumn(4).setPreferredWidth(400);
+            if (this.TBLVentas.getRowCount() > 0) {
+                this.TBLVentas.setRowSelectionInterval(0, 0);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null,"Error al consultar");
+        }
+        mConexion.desconectar();
+    }//GEN-LAST:event_BTNBuscarIDActionPerformed
 
     /**
      * @param args the command line arguments
@@ -145,11 +501,25 @@ public class Ventas extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Label LBLTotalVentas;
+    private javax.swing.JButton BTNBuscarID;
+    private javax.swing.JButton BTNBuscarTodo;
+    private javax.swing.JButton BTNSalir;
+    private javax.swing.JLabel LBLFecha;
+    private javax.swing.JLabel LBLNombreProducto1;
+    private javax.swing.JLabel LBLPrecio;
+    private javax.swing.JLabel LBLTotal;
     private javax.swing.JTable TBLVentas;
-    private java.awt.TextField TXTTotalVentas;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JTextField TXTCantidadNueva;
+    private javax.swing.JButton TXTFinalizarVenta;
+    private javax.swing.JButton TXTGuardarVenta;
+    private javax.swing.JTextField TXTProductoBuscar;
     private javax.swing.JDialog jDialog1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

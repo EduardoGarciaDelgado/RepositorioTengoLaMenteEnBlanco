@@ -322,5 +322,84 @@ public class Conexion {
       }
     
     //----------------------------- Ventas
+    public boolean AltaVenta(Venta mVenta) {
+        Statement consulta;
+        try {
+            consulta = con.createStatement();
+            consulta.execute("insert into Venta "  +
+                        "values (null,'" + mVenta.getFechaVenta() + "', '" + mVenta.getPrecioTotalVenta()+ "');");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    public boolean AltaDetalleVenta(DetalleVenta mDetalleVenta) {
+        Statement consulta;
+        try {
+            consulta = con.createStatement();
+            consulta.execute("insert into Detalle_Ventas " + 
+                        "(idDetalle_Ventas, Cantidad, Precio, Producto_idProducto, Venta_idVenta) " +
+                        "values (null,'" + mDetalleVenta.getCantidad() + "','" 
+                                        + mDetalleVenta.getPrecio() + "','" 
+                                        + mDetalleVenta.getProducto_IdProducto() + "','"
+                                        + mDetalleVenta.getVenta_IdVenta() + "');");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }   
+    public boolean CambiosVenta(Venta mVenta, Venta nVenta) {
+        Statement consulta;
+        try {
+            consulta = con.createStatement();
+            consulta.execute("update Venta set " + 
+                        "PrecioTotalVenta = '" + nVenta.getPrecioTotalVenta() + "'" +
+                        " where IdVenta = " + mVenta.getIdVenta() + ";");
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }     
+        
+    }       
+    public Venta ConsultaTodaVenta(int ID) {
+        Venta mVenta=null;
+        Statement consulta;
+        ResultSet resultado;
+        try {
+            consulta = con.createStatement();
+            resultado = consulta.executeQuery("select * from Venta " +
+                        "where IdVenta = " + ID + ";");
+            if (resultado.next()) {
+                mVenta = new Venta();
+                mVenta.setIdVenta(resultado.getInt("IdVenta"));
+                mVenta.setFechaVenta(resultado.getString("FechaVenta"));
+                mVenta.setPrecioTotalVenta(Float.parseFloat(resultado.getString("PrecioTotalVenta")));            
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mVenta;
+      }  
+    public int ConsultaIDVenta() {
+        ArrayList mLista = new ArrayList();
+        Venta mVenta=null;
+        Statement consulta;
+        ResultSet resultado;
+        int RegistroUltimo=0;
+        
+        try {
+            consulta = con.createStatement();
+            resultado = consulta.executeQuery("SELECT MAX(idVenta) FROM Venta;");
+            while (resultado.next()) {
+                RegistroUltimo = resultado.getInt("MAX(idVenta)");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return RegistroUltimo;
+      }
     
 }
