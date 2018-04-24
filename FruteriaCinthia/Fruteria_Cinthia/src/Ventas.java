@@ -45,7 +45,7 @@ public class Ventas extends javax.swing.JFrame {
                if (mConexion.AltaVenta(mVenta))
                 {
                     JOptionPane.showMessageDialog(null,"LISTO PARA GENERAR VENTA");
-                    RegistroVenta = (mConexion.ConsultaIDCompra()); 
+                    RegistroVenta = (mConexion.ConsultaIDVenta()); 
                 }
                 else
                 {
@@ -91,6 +91,8 @@ public class Ventas extends javax.swing.JFrame {
         LBLNombreProducto1 = new javax.swing.JLabel();
         BTNBuscarID = new javax.swing.JButton();
         LBLTotal = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        LBLProveedor = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -173,6 +175,10 @@ public class Ventas extends javax.swing.JFrame {
         LBLTotal.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
         LBLTotal.setText("0.0");
 
+        jLabel4.setText("Proveedor:");
+
+        LBLProveedor.setText("******************************");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -224,7 +230,11 @@ public class Ventas extends javax.swing.JFrame {
                                 .addGap(73, 73, 73)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(TXTFinalizarVenta)
-                                    .addComponent(BTNSalir))))))
+                                    .addComponent(BTNSalir)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(LBLProveedor)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -249,7 +259,10 @@ public class Ventas extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(LBLFecha)))
+                            .addComponent(LBLFecha)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(LBLProveedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
@@ -306,6 +319,7 @@ public class Ventas extends javax.swing.JFrame {
                     LBLNombreProducto1.setText("******************************");
                     LBLPrecio.setText("******************************");
                     LBLFecha.setText("******************************");
+                    LBLProveedor.setText("******************************");
 
                     Tabla.addRow(Datos);
                 }
@@ -342,10 +356,11 @@ public class Ventas extends javax.swing.JFrame {
         Producto mProductoViejo = mConexion.consultarProducto(Integer.parseInt(this.TXTProductoBuscar.getText()));
         mConexion.desconectar();
 
-        CantidadNueva = Float.parseFloat(TXTCantidadNueva.getText()) + mProductoViejo.getCantidadProducto();
+        CantidadNueva = mProductoViejo.getCantidadProducto() - Float.parseFloat(TXTCantidadNueva.getText());
         nProducto.setNombreProducto(LBLNombreProducto1.getText());
         nProducto.setPrecioProducto(Float.parseFloat(LBLPrecio.getText()));
         nProducto.setFechaCaducidad(LBLFecha.getText());
+        nProducto.setProveedor_idProveedor(LBLProveedor.getText());
         nProducto.setCantidadProducto(CantidadNueva);
         CantidadNueva=0;
 
@@ -369,7 +384,7 @@ public class Ventas extends javax.swing.JFrame {
             mDetalleVenta.setVenta_IdVenta(RegistroVenta);
 
             TotalTemporal = Float.parseFloat(LBLPrecio.getText()) * Float.parseFloat(TXTCantidadNueva.getText());
-            TotalCompleto = TotalTemporal - TotalCompleto;
+            TotalCompleto = TotalTemporal + TotalCompleto;
             LBLTotal.setText(String.valueOf(TotalCompleto));
 
             if (mConexion.AltaDetalleVenta(mDetalleVenta))
@@ -443,6 +458,7 @@ public class Ventas extends javax.swing.JFrame {
                 LBLNombreProducto1.setText(mProducto.getNombreProducto());
                 LBLPrecio.setText(""+mProducto.getPrecioProducto());
                 LBLFecha.setText(""+mProducto.getFechaCaducidad());
+                LBLProveedor.setText(""+mProducto.getProveedor_idProveedor());
 
                 Tabla.addRow(Datos);
             } else {
@@ -507,6 +523,7 @@ public class Ventas extends javax.swing.JFrame {
     private javax.swing.JLabel LBLFecha;
     private javax.swing.JLabel LBLNombreProducto1;
     private javax.swing.JLabel LBLPrecio;
+    private javax.swing.JLabel LBLProveedor;
     private javax.swing.JLabel LBLTotal;
     private javax.swing.JTable TBLVentas;
     private javax.swing.JTextField TXTCantidadNueva;
@@ -517,6 +534,7 @@ public class Ventas extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

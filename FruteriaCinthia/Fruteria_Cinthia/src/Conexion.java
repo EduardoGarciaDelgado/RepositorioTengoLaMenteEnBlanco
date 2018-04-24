@@ -371,7 +371,7 @@ public class Conexion {
         try {
             consulta = con.createStatement();
             resultado = consulta.executeQuery("select * from Venta " +
-                        "where IdVenta = " + ID + ";");
+                        "where idVenta = " + ID + ";");
             if (resultado.next()) {
                 mVenta = new Venta();
                 mVenta.setIdVenta(resultado.getInt("IdVenta"));
