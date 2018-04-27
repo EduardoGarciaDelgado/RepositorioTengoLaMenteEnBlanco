@@ -22,7 +22,7 @@ public class ReporteDeVentas extends javax.swing.JFrame {
      * Creates new form ReporteDeVentas
      */
     Conexion mConexion = new Conexion();
-    Producto mProducto = new Producto();
+    Venta mVenta = new Venta();
     DefaultTableModel Tabla = new DefaultTableModel();
     int ContadorColumna = 1;
     public ReporteDeVentas() {
@@ -35,41 +35,32 @@ public class ReporteDeVentas extends javax.swing.JFrame {
         
         if (mConexion.con()) {
             ArrayList mArrayList = new ArrayList();
-            mArrayList = mConexion.ConsultaTodoProducto();
+            mArrayList = mConexion.ConsultaTodosIdVenta();
             String[] Datos = null;
             if (mArrayList != null) {
                 if (ContadorColumna == 1) {
                     Tabla.addColumn("ID");
-                    Tabla.addColumn("Nombre");
-                    Tabla.addColumn("Precio");
-                    Tabla.addColumn("Fecha Caducidad");
-                    //Tabla.addColumn("ID Proveedor");
-                    Tabla.addColumn("Cantidad");
+                    Tabla.addColumn("Fecha");
+                    Tabla.addColumn("Total");
                     ContadorColumna = 2;
                 }
                 for (int i = 0; i < mArrayList.size(); i++) {
-                    mProducto = (Producto) mArrayList.get(i);
-                    Datos = new String[5];
-                    Datos[0] = "" + mProducto.getIDProducto();
-                    Datos[1] = mProducto.getNombreProducto();
-                    Datos[2] = "" + mProducto.getPrecioProducto();
-                    Datos[3] = mProducto.getFechaCaducidad();
-                    //Datos[4] = "" + mProducto.getProveedor_idProveedor();
-                    Datos[4] = "" + mProducto.getCantidadProducto();
+                    mVenta = (Venta) mArrayList.get(i);
+                    Datos = new String[3];
+                    Datos[0] = "" + mVenta.getIdVenta();
+                    Datos[1] = mVenta.getFechaVenta();
+                    Datos[2] = "" + mVenta.getPrecioTotalVenta();
                     Tabla.addRow(Datos);
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "No existe ese Producto...");
+                JOptionPane.showMessageDialog(null, "No existe esa Venta...");
             }
             this.TableReporteDeVentas = new javax.swing.JTable();
             this.TableReporteDeVentas.setModel(Tabla);
             this.TableReporteDeVentas.getColumnModel().getColumn(0).setPreferredWidth(50);
             this.TableReporteDeVentas.getColumnModel().getColumn(1).setPreferredWidth(100);
             this.TableReporteDeVentas.getColumnModel().getColumn(2).setPreferredWidth(400);
-            this.TableReporteDeVentas.getColumnModel().getColumn(3).setPreferredWidth(600);
-            this.TableReporteDeVentas.getColumnModel().getColumn(4).setPreferredWidth(400);
-            //this.TableReporteDeVentas.getColumnModel().getColumn(5).setPreferredWidth(100);
             if (this.TableReporteDeVentas.getRowCount() > 0) {
                 this.TableReporteDeVentas.setRowSelectionInterval(0, 0);
             }
@@ -86,7 +77,7 @@ public class ReporteDeVentas extends javax.swing.JFrame {
             String sucursalesCSVFile = "/Users/macbookair13/Desktop/RepositorioTengoLaMenteEnBlanco/FruteriaCinthia/Fruteria_Cinthia/TablaReporteVentas.csv";
             BufferedWriter mBufferedWriter = new BufferedWriter(new FileWriter(sucursalesCSVFile ));
             
-            mBufferedWriter.write("idProducto,Nombre,Precio,Fecha,Cantidad");
+            mBufferedWriter.write("idventa,FechaVenta,PrecioTotalVenta");
             mBufferedWriter.newLine(); //inserta nueva linea.
             for (int i = 0 ; i < TableReporteDeVentas.getRowCount(); i++) //realiza un barrido por filas.
             {

@@ -356,7 +356,7 @@ public class Conexion {
             consulta = con.createStatement();
             consulta.execute("update Venta set " + 
                         "PrecioTotalVenta = '" + nVenta.getPrecioTotalVenta() + "'" +
-                        " where IdVenta = " + mVenta.getIdVenta() + ";");
+                        " where idVenta = " + mVenta.getIdVenta() + ";");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -374,7 +374,7 @@ public class Conexion {
                         "where idVenta = " + ID + ";");
             if (resultado.next()) {
                 mVenta = new Venta();
-                mVenta.setIdVenta(resultado.getInt("IdVenta"));
+                mVenta.setIdVenta(resultado.getInt("idVenta"));
                 mVenta.setFechaVenta(resultado.getString("FechaVenta"));
                 mVenta.setPrecioTotalVenta(Float.parseFloat(resultado.getString("PrecioTotalVenta")));            
             }
@@ -400,6 +400,27 @@ public class Conexion {
             e.printStackTrace();
         }
         return RegistroUltimo;
+      }
+    public ArrayList ConsultaTodosIdVenta() {
+        
+        ArrayList mLista = new ArrayList();
+        Venta mVenta=null;
+        Statement consulta;
+        ResultSet resultado;
+        try {
+            consulta = con.createStatement();
+            resultado = consulta.executeQuery("select * from Venta;");
+            while (resultado.next()) {
+                mVenta = new Venta();
+                mVenta.setIdVenta(resultado.getInt("idVenta"));
+                mVenta.setFechaVenta(resultado.getString("FechaVenta"));
+                mVenta.setPrecioTotalVenta(resultado.getFloat("PrecioTotalVenta"));
+                mLista.add(mVenta);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mLista;
       }
     
 }
