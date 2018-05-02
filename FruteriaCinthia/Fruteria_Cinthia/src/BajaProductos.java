@@ -1,4 +1,5 @@
 
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -118,6 +119,7 @@ public class BajaProductos extends javax.swing.JFrame {
 
     private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
         // TODO add your handling code here:
+        try {
         if(mConexion.con()){
             Producto mProducto = mConexion.consultarProducto(Integer.parseInt(this.TXTProductoEliminar.getText()));
             String [] Datos;
@@ -163,10 +165,14 @@ public class BajaProductos extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error al consultar");
                 }
             mConexion.desconectar();
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,"LLENAR EL CAMPO");
+        }
     }//GEN-LAST:event_BTNBuscarActionPerformed
 
     private void BTNEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNEliminarActionPerformed
         // TODO add your handling code here:
+        try {
         if (mConexion.con())
             {
                 mProducto = new Producto();
@@ -182,6 +188,9 @@ public class BajaProductos extends javax.swing.JFrame {
                 mConexion.desconectar();
             }
         TXTProductoEliminar.setText("");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"ERROR, LLENAR EL CAMPO");
+        }
     }//GEN-LAST:event_BTNEliminarActionPerformed
 
     /**

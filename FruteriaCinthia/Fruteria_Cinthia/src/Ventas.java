@@ -1,4 +1,5 @@
 
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -44,7 +45,6 @@ public class Ventas extends javax.swing.JFrame {
             if(mConexion.con()) {
                if (mConexion.AltaVenta(mVenta))
                 {
-                    JOptionPane.showMessageDialog(null,"LISTO PARA GENERAR VENTA");
                     RegistroVenta = (mConexion.ConsultaIDVenta()); 
                 }
                 else
@@ -173,7 +173,6 @@ public class Ventas extends javax.swing.JFrame {
         });
 
         LBLTotal.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        LBLTotal.setForeground(new java.awt.Color(255, 51, 51));
         LBLTotal.setText("0.0");
 
         jLabel4.setText("Proveedor:");
@@ -352,6 +351,7 @@ public class Ventas extends javax.swing.JFrame {
 
     private void TXTGuardarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTGuardarVentaActionPerformed
         // TODO add your handling code here:
+        try {
         Producto nProducto = new Producto();
         mProducto.setIDProducto(Integer.parseInt(this.TXTProductoBuscar.getText()));
         mConexion.con();
@@ -371,7 +371,6 @@ public class Ventas extends javax.swing.JFrame {
 
             if (mConexion.modificarProducto(mProducto, nProducto))
             {
-                JOptionPane.showMessageDialog(null,"PRODUCTOS AÑADIDOS");
             }
             else
             {
@@ -391,21 +390,24 @@ public class Ventas extends javax.swing.JFrame {
 
             if (mConexion.AltaDetalleVenta(mDetalleVenta))
             {
-                JOptionPane.showMessageDialog(null,"DETALLE DE VENTA GUARDADO");
             }
             else
             {
-                JOptionPane.showMessageDialog(null,"Error detalle Venta");
+                JOptionPane.showMessageDialog(null,"ERROR DE VENTA");
             }
         }
         TXTCantidadNueva.setText("");
         TXTProductoBuscar.setText("");
 
         mConexion.desconectar();
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,"PORFAVOR, OFRECE UN ID");
+        }
     }//GEN-LAST:event_TXTGuardarVentaActionPerformed
 
     private void TXTFinalizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTFinalizarVentaActionPerformed
         // TODO add your handling code here:
+        if ((Float.parseFloat(LBLTotal.getText())) != 0) {
         Venta mVentaAlterada = new Venta();
         mVenta.setIdVenta(RegistroVenta);
         mVentaAlterada.setPrecioTotalVenta(Float.parseFloat(LBLTotal.getText()));
@@ -413,14 +415,17 @@ public class Ventas extends javax.swing.JFrame {
         {
             if (mConexion.CambiosVenta(mVenta, mVentaAlterada))
             {
-                JOptionPane.showMessageDialog(null,"NUEVO PRECIO EN LA VENTA");
+                JOptionPane.showMessageDialog(null,"VENTA GUARDADA CON EXITO");
             }
             else
             {
-                JOptionPane.showMessageDialog(null,"ERROR EN NUEVO PRECIO");
+                JOptionPane.showMessageDialog(null,"ERROR EN VENTA");
             }
         }
         mConexion.desconectar();
+        } else {
+            JOptionPane.showMessageDialog(null,"VENTA NO GUARDADA");
+        }
     }//GEN-LAST:event_TXTFinalizarVentaActionPerformed
 
     private void BTNSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNSalirActionPerformed
@@ -429,6 +434,7 @@ public class Ventas extends javax.swing.JFrame {
 
     private void BTNBuscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarIDActionPerformed
         // TODO add your handling code here:
+        try {
         DefaultTableModel TablaLimpiar = (DefaultTableModel) TBLVentas.getModel();
         int a = TBLVentas.getRowCount()-1;
         for(int i = a; i>=0;i--) {
@@ -481,6 +487,9 @@ public class Ventas extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"Error al consultar");
         }
         mConexion.desconectar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"POR FAVOR, LLENE EL CAMPO");
+        }
     }//GEN-LAST:event_BTNBuscarIDActionPerformed
 
     /**

@@ -120,6 +120,7 @@ public class ConsultaProveedor extends javax.swing.JFrame {
 
     private void BTNBuscarUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarUnoActionPerformed
         // TODO add your handling code here:
+        try{
         DefaultTableModel TablaLimpiar = (DefaultTableModel) TBLDetalleProveedor.getModel();
         int a = TBLDetalleProveedor.getRowCount() - 1;
         for (int i = a; i >= 0; i--) {
@@ -158,6 +159,9 @@ public class ConsultaProveedor extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error al consultar");
         }
         mConexion.desconectar();
+        } catch(Exception e){
+            JOptionPane.showMessageDialog(null, "POR FAVOR, LLENE BIEN EL CAMPO");
+        }
     }//GEN-LAST:event_BTNBuscarUnoActionPerformed
 
     private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed

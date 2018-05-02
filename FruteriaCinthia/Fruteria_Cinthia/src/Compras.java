@@ -1,4 +1,5 @@
 
+import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -85,10 +86,7 @@ public class Compras extends javax.swing.JFrame {
                 if(mConexion.con()) {
                     if (mConexion.AltaCompra(mCompra))
                     {
-                        JOptionPane.showMessageDialog(null,"LISTO PARA GENERAR COMPRA");
-                        
-                        RegistroCompra = (mConexion.ConsultaIDCompra());
-                        
+                        RegistroCompra = (mConexion.ConsultaIDCompra());                       
                     }
                     else
                     {
@@ -200,7 +198,6 @@ public class Compras extends javax.swing.JFrame {
         LBLNombreProducto1.setText("******************************");
 
         LBLTotal.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
-        LBLTotal.setForeground(new java.awt.Color(255, 0, 51));
         LBLTotal.setText("0.0");
 
         jLabel4.setText("Proveedor:");
@@ -331,6 +328,7 @@ public class Compras extends javax.swing.JFrame {
 
     private void BTNBuscarIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarIDActionPerformed
         // TODO add your handling code here:
+        try {
         DefaultTableModel TablaLimpiar = (DefaultTableModel) TBLCompras.getModel();
         int a = TBLCompras.getRowCount()-1;
         for(int i = a; i>=0;i--) {
@@ -387,6 +385,9 @@ public class Compras extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error al consultar");
                 }
            mConexion.desconectar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "POR FAVOR, LLENE BIEN EL CAMPO");
+        }
     }//GEN-LAST:event_BTNBuscarIDActionPerformed
 
     private void BTNBuscarTodoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarTodoActionPerformed
@@ -457,6 +458,7 @@ public class Compras extends javax.swing.JFrame {
 
     private void TXTGuardarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTGuardarCompraActionPerformed
         // TODO add your handling code here:
+        try {
         Producto nProducto = new Producto();
         mProducto.setIDProducto(Integer.parseInt(this.TXTProductoBuscar.getText()));
         mProveedor.setIdProveedor(Integer.parseInt(this.LBLProveedor.getText()));
@@ -477,7 +479,6 @@ public class Compras extends javax.swing.JFrame {
 
                 if (mConexion.modificarProducto(mProducto, nProducto))
                 {
-                    JOptionPane.showMessageDialog(null,"PRODUCTOS AÑADIDOS");
                 }
                 else
                 {
@@ -498,21 +499,26 @@ public class Compras extends javax.swing.JFrame {
                 
                 if (mConexion.AltaDetalleCompra(mDetalleCompra))
                 {
-                    JOptionPane.showMessageDialog(null,"DETALLE DE COMPRA GUARDADO");
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null,"Error detalle compra");
+                    JOptionPane.showMessageDialog(null,"ERROR DE COMPRA");
                 }                
             }
             TXTCantidadNueva.setText("");
             TXTProductoBuscar.setText("");
             
             mConexion.desconectar();
+        }
+        catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,"PORFAVOR, OFRECE UN ID");
+        }
     }//GEN-LAST:event_TXTGuardarCompraActionPerformed
 
     private void TXTFinalizarCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TXTFinalizarCompraActionPerformed
         // TODO add your handling code here:
+        if ((Float.parseFloat(LBLTotal.getText())) != 0) {
+        try {
             Compra mCompraAlterada = new Compra();
             mCompra.setIdCompra(RegistroCompra);
             mCompraAlterada.setPrecioTotalCompra(Float.parseFloat(LBLTotal.getText()));
@@ -520,14 +526,20 @@ public class Compras extends javax.swing.JFrame {
             {
                 if (mConexion.CambiosCompra(mCompra, mCompraAlterada))
                 {
-                    JOptionPane.showMessageDialog(null,"NUEVO PRECIO EN LA COMPRA");
+                    JOptionPane.showMessageDialog(null,"COMPRA GUARDADA CON EXITO");
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null,"ERROR EN NUEVO PRECIO");
+                    JOptionPane.showMessageDialog(null,"ERROR EN COMPRA");
                 }
             }
             mConexion.desconectar();
+        } catch (HeadlessException | NumberFormatException e) {
+            JOptionPane.showMessageDialog(null,"COMPRA NO GUARDADA");
+        }
+        } else {
+            JOptionPane.showMessageDialog(null,"COMPRA NO GUARDADA");
+        }
     }//GEN-LAST:event_TXTFinalizarCompraActionPerformed
 
     /**

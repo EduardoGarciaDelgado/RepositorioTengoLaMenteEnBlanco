@@ -138,6 +138,7 @@ public class CambiosProveedor extends javax.swing.JFrame {
 
     private void BTNModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNModificarActionPerformed
         // TODO add your handling code here:
+        try {
         Proveedor nProveedor = new Proveedor();
         mProveedor.setIdProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
         nProveedor.setNombre(this.TXTNombreProveedor.getText());
@@ -154,10 +155,14 @@ public class CambiosProveedor extends javax.swing.JFrame {
                 mConexion.desconectar();
             }
         TXTNombreProveedor.setText("");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"POR FAVOR, LLENE BIEN EL CAMPO");
+        }
     }//GEN-LAST:event_BTNModificarActionPerformed
 
     private void BTNBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarActionPerformed
         // TODO add your handling code here:
+        try {
         if(mConexion.con()){
             Proveedor mProveedor = mConexion.ConsultaProveedor(Integer.parseInt(this.TXTIdProveedor.getText()));
             String [] Datos;
@@ -194,6 +199,9 @@ public class CambiosProveedor extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error al consultar");
                 }
             mConexion.desconectar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"POR FAVOR, LLENE BIEN EL CAMPO");
+        }
     }//GEN-LAST:event_BTNBuscarActionPerformed
 
     /**

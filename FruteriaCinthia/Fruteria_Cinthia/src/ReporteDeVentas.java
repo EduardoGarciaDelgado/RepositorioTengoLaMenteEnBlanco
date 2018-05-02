@@ -74,7 +74,7 @@ public class ReporteDeVentas extends javax.swing.JFrame {
     private void guardaTabla(){
         try {
 
-            String sucursalesCSVFile = "/Users/macbookair13/Desktop/RepositorioTengoLaMenteEnBlanco/FruteriaCinthia/Fruteria_Cinthia/TablaReporteVentas.csv";
+            String sucursalesCSVFile = "TablaReporteVentas.csv";
             BufferedWriter mBufferedWriter = new BufferedWriter(new FileWriter(sucursalesCSVFile ));
             
             mBufferedWriter.write("idventa,FechaVenta,PrecioTotalVenta");

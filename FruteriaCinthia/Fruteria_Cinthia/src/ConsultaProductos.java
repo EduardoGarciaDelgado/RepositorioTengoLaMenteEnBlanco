@@ -181,6 +181,7 @@ public class ConsultaProductos extends javax.swing.JFrame {
 
     private void BTNBuscarUnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNBuscarUnoActionPerformed
         // TODO add your handling code here:
+        try {
         DefaultTableModel TablaLimpiar = (DefaultTableModel) TBLProductos.getModel();
         int a = TBLProductos.getRowCount()-1;
         for(int i = a; i>=0;i--) {
@@ -232,6 +233,9 @@ public class ConsultaProductos extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error al consultar");
                 }
             mConexion.desconectar();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,"LLENAR EL CAMPIO");
+        }
     }//GEN-LAST:event_BTNBuscarUnoActionPerformed
 
     /**

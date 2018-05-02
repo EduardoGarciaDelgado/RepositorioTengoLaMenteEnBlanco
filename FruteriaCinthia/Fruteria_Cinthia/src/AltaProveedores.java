@@ -1,4 +1,5 @@
 
+import java.awt.HeadlessException;
 import javax.swing.JOptionPane;
 
 /*
@@ -99,6 +100,7 @@ public class AltaProveedores extends javax.swing.JFrame {
 
     private void BTNGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNGuardarActionPerformed
         // TODO add your handling code here:
+        if (TXTNombreProveedor.getText() == null) {
         mProveedor.setNombre(this.TXTNombreProveedor.getText());
         if (mConexion.con())
         {
@@ -111,6 +113,9 @@ public class AltaProveedores extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null,"Error al guardar el Proveedor");
             }
             mConexion.desconectar();
+        }
+        } else {
+            JOptionPane.showMessageDialog(null,"POR FAVOR, LLENE BIEN LOS DATOS");
         }
     }//GEN-LAST:event_BTNGuardarActionPerformed
 

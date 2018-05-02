@@ -26,7 +26,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuCatalogoProductos = new javax.swing.JMenu();
         MenuAltaProductos = new javax.swing.JMenuItem();
@@ -46,9 +45,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagenes/Sin título-2.jpg"))); // NOI18N
-
-        MenuCatalogoProductos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         MenuCatalogoProductos.setText("CATALOGO PRODUCTOS");
 
         MenuAltaProductos.setText("ALTA PRODUCTOS");
@@ -85,7 +81,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuCatalogoProductos);
 
-        MenuCatalogoProveedores.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         MenuCatalogoProveedores.setText("CATALOGO PROVEEDORES");
 
         MenuAltaProveedor.setText("ALTA PROVEEDOR");
@@ -122,7 +117,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuCatalogoProveedores);
 
-        MenuReportes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         MenuReportes.setText("REPORTES");
 
         ReporteExistencia.setText("REPORTE EXISTENCIA");
@@ -143,7 +137,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuReportes);
 
-        MenuCompras.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         MenuCompras.setText("COMPRAS");
         MenuCompras.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -152,7 +145,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         });
         jMenuBar1.add(MenuCompras);
 
-        MenuVentas.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         MenuVentas.setText("VENTAS");
         MenuVentas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -167,14 +159,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
+            .addGap(0, 1029, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1)
+            .addGap(0, 593, Short.MAX_VALUE)
         );
 
         pack();
@@ -304,7 +293,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuVentas;
     private javax.swing.JMenuItem ReporteExistencia;
     private javax.swing.JMenuItem ReporteVenta;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
