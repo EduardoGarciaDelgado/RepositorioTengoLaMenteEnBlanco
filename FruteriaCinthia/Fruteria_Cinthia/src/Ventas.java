@@ -173,6 +173,7 @@ public class Ventas extends javax.swing.JFrame {
         });
 
         LBLTotal.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        LBLTotal.setForeground(new java.awt.Color(255, 51, 51));
         LBLTotal.setText("0.0");
 
         jLabel4.setText("Proveedor:");

@@ -200,6 +200,7 @@ public class Compras extends javax.swing.JFrame {
         LBLNombreProducto1.setText("******************************");
 
         LBLTotal.setFont(new java.awt.Font("Lucida Grande", 0, 24)); // NOI18N
+        LBLTotal.setForeground(new java.awt.Color(255, 0, 51));
         LBLTotal.setText("0.0");
 
         jLabel4.setText("Proveedor:");
