@@ -26,6 +26,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuCatalogoProductos = new javax.swing.JMenu();
         MenuAltaProductos = new javax.swing.JMenuItem();
@@ -44,6 +45,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         MenuVentas = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Sin título-2.jpg"))); // NOI18N
+        jLabel1.setText("jLabel1");
 
         MenuCatalogoProductos.setText("CATALOGO PRODUCTOS");
 
@@ -159,11 +163,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1029, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 928, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 593, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
         );
 
         pack();
@@ -293,6 +297,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuVentas;
     private javax.swing.JMenuItem ReporteExistencia;
     private javax.swing.JMenuItem ReporteVenta;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
