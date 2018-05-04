@@ -357,49 +357,53 @@ public class Ventas extends javax.swing.JFrame {
         mConexion.con();
         Producto mProductoViejo = mConexion.consultarProducto(Integer.parseInt(this.TXTProductoBuscar.getText()));
         mConexion.desconectar();
+        
+        if ((mProductoViejo.getCantidadProducto() > 0 ) && (mProductoViejo.getCantidadProducto() > Float.parseFloat(TXTCantidadNueva.getText()))) {
+        
+            CantidadNueva = mProductoViejo.getCantidadProducto() - Float.parseFloat(TXTCantidadNueva.getText());
+            nProducto.setNombreProducto(LBLNombreProducto1.getText());
+            nProducto.setPrecioProducto(Float.parseFloat(LBLPrecio.getText()));
+            nProducto.setFechaCaducidad(LBLFecha.getText());
+            nProducto.setProveedor_idProveedor(LBLProveedor.getText());
+            nProducto.setCantidadProducto(CantidadNueva);
+            CantidadNueva=0;
 
-        CantidadNueva = mProductoViejo.getCantidadProducto() - Float.parseFloat(TXTCantidadNueva.getText());
-        nProducto.setNombreProducto(LBLNombreProducto1.getText());
-        nProducto.setPrecioProducto(Float.parseFloat(LBLPrecio.getText()));
-        nProducto.setFechaCaducidad(LBLFecha.getText());
-        nProducto.setProveedor_idProveedor(LBLProveedor.getText());
-        nProducto.setCantidadProducto(CantidadNueva);
-        CantidadNueva=0;
-
-        if (mConexion.con())
-        {
-
-            if (mConexion.modificarProducto(mProducto, nProducto))
+            if (mConexion.con())
             {
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"ERROR EN AÑADIR, VUELVE A INTENTARLO");
-            }
+                if (mConexion.modificarProducto(mProducto, nProducto))
+                {
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"ERROR EN AÑADIR, VUELVE A INTENTARLO");
+                }
 
-            Venta mVentaConsultada = mConexion.ConsultaTodaVenta(mVenta.getIdVenta());
+                Venta mVentaConsultada = mConexion.ConsultaTodaVenta(mVenta.getIdVenta());
 
-            mDetalleVenta.setCantidad(Float.parseFloat(TXTCantidadNueva.getText()));
-            mDetalleVenta.setPrecio(Float.parseFloat(LBLPrecio.getText()));
-            mDetalleVenta.setProducto_IdProducto(mProducto.getIDProducto());
-            mDetalleVenta.setVenta_IdVenta(RegistroVenta);
+                mDetalleVenta.setCantidad(Float.parseFloat(TXTCantidadNueva.getText()));
+                mDetalleVenta.setPrecio(Float.parseFloat(LBLPrecio.getText()));
+                mDetalleVenta.setProducto_IdProducto(mProducto.getIDProducto());
+                mDetalleVenta.setVenta_IdVenta(RegistroVenta);
 
-            TotalTemporal = Float.parseFloat(LBLPrecio.getText()) * Float.parseFloat(TXTCantidadNueva.getText());
-            TotalCompleto = TotalTemporal + TotalCompleto;
-            LBLTotal.setText(String.valueOf(TotalCompleto));
+                TotalTemporal = Float.parseFloat(LBLPrecio.getText()) * Float.parseFloat(TXTCantidadNueva.getText());
+                TotalCompleto = TotalTemporal + TotalCompleto;
+                LBLTotal.setText(String.valueOf(TotalCompleto));
 
-            if (mConexion.AltaDetalleVenta(mDetalleVenta))
-            {
+                if (mConexion.AltaDetalleVenta(mDetalleVenta))
+                {
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null,"ERROR DE VENTA");
+                }
             }
-            else
-            {
-                JOptionPane.showMessageDialog(null,"ERROR DE VENTA");
-            }
+            TXTCantidadNueva.setText("");
+            TXTProductoBuscar.setText("");
+
+            mConexion.desconectar();
+        } else {
+            JOptionPane.showMessageDialog(null,"NO HAY DEMASIADO PRODUCTO");
         }
-        TXTCantidadNueva.setText("");
-        TXTProductoBuscar.setText("");
-
-        mConexion.desconectar();
         } catch (HeadlessException | NumberFormatException e) {
             JOptionPane.showMessageDialog(null,"PORFAVOR, OFRECE UN ID");
         }
