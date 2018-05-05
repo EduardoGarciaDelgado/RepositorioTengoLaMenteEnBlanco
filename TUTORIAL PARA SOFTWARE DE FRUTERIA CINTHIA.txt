@@ -1,17 +1,19 @@
 *** TUTORIAL PARA SOFTWARE DE FRUTERIA CINTHIA ***
-	·Exportacion de la Base de Datos
+	·Exportación de la Base de Datos
 1.- Crear una base de datos de nombre "mydb"
 2.- Exportar en la base de datos el archivo mydb.sql
 	(esto con el fin de exportar la Base de Datos).
 	·Como hacer una compra
-1.- Al ingresar a la opcion de compras, el usuario puede buscar todo el catalogo de productos
-	y asi ingresar en la caja de texto el id del producto que se comprara, se debe seleccionar
-	la opcion "Seleccionar por ID" para tomar los datos y despues modificar la cantidad a
-	comprar. Despues se tomara la opcion de "Guardar Compra" para pasar a otro producto, al
-	finalizar la compra se debe de confirmar en el boton "Finalizar Compra".
+1.- Al ingresar a la opción de compras, el usuario puede ver todo el catalogo de productos dando 
+	clic al botón Buscar Todo,
+	y así ingresar en la caja de texto el id del producto que se comprará, posteriormente seleccionar
+	la opción "Seleccionar por ID" para tomar los datos y después modificar la cantidad a
+	comprar. Después se tomará la opción de "Guardar Compra" para pasar a otro producto, al
+	finalizar la compra se debe de confirmar en el botón "Finalizar Compra".
 	·Como hacer una venta
-1.- Al ingresar a la opcion de ventas, el usuario puede buscar todo el catalogo de productos
-	y asi ingresar en la caja de texto el id del producto que se vendera, se debe seleccionar
-	la opcion "Seleccionar por ID" para tomar los datos y despues modificar la cantidad a
-	vender. Despues se tomara la opcion de "Guardar Venta" para pasar a otro producto, al
-	finalizar la venta se debe de confirmar en el boton "Finalizar Venta".
+1.- Al ingresar a la opción de ventas, el usuario puede ver todo el catalogo de productos dando
+	clic al botón Buscar Todo,
+	y así ingresar en la caja de texto el id del producto que se venderá, posteriormente seleccionar
+	la opción "Seleccionar por ID" para tomar los datos y después modificar la cantidad a
+	vender. Después se tomará la opción de "Guardar Venta" para pasar a otro producto, al
+	finalizar la venta se debe de confirmar en el botón "Finalizar Venta".
