@@ -1,4 +1,6 @@
 
+import java.awt.HeadlessException;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -136,7 +138,7 @@ public class BajaProveedor extends javax.swing.JFrame {
             }
             mConexion.desconectar();
         }
-        } catch (Exception e) {
+        } catch (HeadlessException | NumberFormatException e) {
             JOptionPane.showMessageDialog(null,"POR FAVOR, LLENE EL CAMPO");
         }
     }//GEN-LAST:event_BTNeliminarActionPerformed

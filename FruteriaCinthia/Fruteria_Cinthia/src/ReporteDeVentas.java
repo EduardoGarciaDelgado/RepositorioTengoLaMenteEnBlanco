@@ -3,8 +3,18 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,6 +31,7 @@ public class ReporteDeVentas extends javax.swing.JFrame {
     /**
      * Creates new form ReporteDeVentas
      */
+    public String FechaInferior, FechaSuperior;
     Conexion mConexion = new Conexion();
     Venta mVenta = new Venta();
     DefaultTableModel Tabla = new DefaultTableModel();
@@ -42,14 +53,16 @@ public class ReporteDeVentas extends javax.swing.JFrame {
                     Tabla.addColumn("ID");
                     Tabla.addColumn("Fecha");
                     Tabla.addColumn("Total");
+                    Tabla.addColumn("Ganancia");
                     ContadorColumna = 2;
                 }
                 for (int i = 0; i < mArrayList.size(); i++) {
                     mVenta = (Venta) mArrayList.get(i);
-                    Datos = new String[3];
+                    Datos = new String[4];
                     Datos[0] = "" + mVenta.getIdVenta();
                     Datos[1] = mVenta.getFechaVenta();
                     Datos[2] = "" + mVenta.getPrecioTotalVenta();
+                    Datos[3] = "" + mVenta.getGanacia();
                     Tabla.addRow(Datos);
                 }
 
@@ -60,6 +73,7 @@ public class ReporteDeVentas extends javax.swing.JFrame {
             this.TableReporteDeVentas.setModel(Tabla);
             this.TableReporteDeVentas.getColumnModel().getColumn(0).setPreferredWidth(50);
             this.TableReporteDeVentas.getColumnModel().getColumn(1).setPreferredWidth(100);
+            this.TableReporteDeVentas.getColumnModel().getColumn(2).setPreferredWidth(400);
             this.TableReporteDeVentas.getColumnModel().getColumn(2).setPreferredWidth(400);
             if (this.TableReporteDeVentas.getRowCount() > 0) {
                 this.TableReporteDeVentas.setRowSelectionInterval(0, 0);
@@ -77,7 +91,7 @@ public class ReporteDeVentas extends javax.swing.JFrame {
             String sucursalesCSVFile = "TablaReporteVentas.csv";
             BufferedWriter mBufferedWriter = new BufferedWriter(new FileWriter(sucursalesCSVFile ));
             
-            mBufferedWriter.write("idventa,FechaVenta,PrecioTotalVenta");
+            mBufferedWriter.write("idventa,FechaVenta,PrecioTotalVenta,Ganancia");
             mBufferedWriter.newLine(); //inserta nueva linea.
             for (int i = 0 ; i < TableReporteDeVentas.getRowCount(); i++) //realiza un barrido por filas.
             {
@@ -111,6 +125,21 @@ public class ReporteDeVentas extends javax.swing.JFrame {
         TableReporteDeVentas = new javax.swing.JTable();
         BTNSalir = new javax.swing.JButton();
         BTNGuardarReporteVentas = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        CBAnyoInferior = new javax.swing.JComboBox<>();
+        CBMesInferior = new javax.swing.JComboBox<>();
+        CBDiaInferior = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        CBAnyoSuperior = new javax.swing.JComboBox<>();
+        CBMesSuperior = new javax.swing.JComboBox<>();
+        CBDiaSuperior = new javax.swing.JComboBox<>();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -131,17 +160,88 @@ public class ReporteDeVentas extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Ver Reporte Detallado");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        CBAnyoInferior.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032" }));
+
+        CBMesInferior.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+
+        CBDiaInferior.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        jLabel1.setText("Fecha Limite Inferior:");
+
+        jLabel2.setText("Fecha Limite Superior:");
+
+        CBAnyoSuperior.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032" }));
+
+        CBMesSuperior.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12" }));
+
+        CBDiaSuperior.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31" }));
+
+        jLabel3.setText("Año");
+
+        jLabel4.setText("Mes");
+
+        jLabel5.setText("Dia");
+
+        jLabel6.setText("Año");
+
+        jLabel7.setText("Mes");
+
+        jLabel8.setText("Dia");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BTNSalir)
-                    .addComponent(BTNGuardarReporteVentas))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addComponent(jLabel1)))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(CBAnyoInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel7)
+                                            .addComponent(CBMesInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(CBDiaInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BTNGuardarReporteVentas)
+                            .addComponent(BTNSalir)
+                            .addComponent(jButton1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CBAnyoSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(CBMesSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(CBDiaSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(62, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +253,33 @@ public class ReporteDeVentas extends javax.swing.JFrame {
                 .addComponent(BTNGuardarReporteVentas)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BTNSalir)
-                .addContainerGap(264, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CBAnyoInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBMesInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBDiaInferior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(CBAnyoSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBMesSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(CBDiaSuperior, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addComponent(jButton1)
+                .addGap(37, 37, 37))
         );
 
         pack();
@@ -169,6 +295,37 @@ public class ReporteDeVentas extends javax.swing.JFrame {
         ReporteDeVentas mReporte = new ReporteDeVentas();
         mReporte.guardaTabla();
     }//GEN-LAST:event_BTNGuardarReporteVentasActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+            String AnyoInferior = (String) CBAnyoInferior.getSelectedItem();
+            String MesInferior = (String) CBMesInferior.getSelectedItem();
+            String DiaInferior = (String) CBDiaInferior.getSelectedItem();
+            FechaInferior = AnyoInferior + "-" + MesInferior + "-" + DiaInferior;
+            
+            String AnyoSuperior = (String) CBAnyoSuperior.getSelectedItem();
+            String MesSuperior = (String) CBMesSuperior.getSelectedItem();
+            String DiaSuperior = (String) CBDiaSuperior.getSelectedItem();
+            FechaSuperior = AnyoSuperior + "-" + MesSuperior + "-" + DiaSuperior;
+            
+            String path = "/Users/macbookair13/Documents/RepositorioTengoLaMenteEnBlanco/FruteriaCinthia/Fruteria_Cinthia/src/ReportVenta.jasper";
+            JasperReport jr = null;
+            Map Parametros = new HashMap();
+        
+            try {
+                Parametros.put("Fecha1", FechaInferior);
+                Parametros.put("Fecha2", FechaSuperior);
+                //jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+                JasperPrint jp = JasperFillManager.fillReport(jr, Parametros, mConexion.conectare());
+                JasperViewer jv = new JasperViewer(jp, false);
+                jv.setVisible(true);
+                jv.setTitle(path);
+                //this.dispose();
+            } catch (JRException ex) {
+                Logger.getLogger(ReporteDeExistencias.class.getName()).log(Level.SEVERE, null, ex);
+            }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -208,7 +365,22 @@ public class ReporteDeVentas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNGuardarReporteVentas;
     private javax.swing.JButton BTNSalir;
+    private javax.swing.JComboBox<String> CBAnyoInferior;
+    private javax.swing.JComboBox<String> CBAnyoSuperior;
+    private javax.swing.JComboBox<String> CBDiaInferior;
+    private javax.swing.JComboBox<String> CBDiaSuperior;
+    private javax.swing.JComboBox<String> CBMesInferior;
+    private javax.swing.JComboBox<String> CBMesSuperior;
     private javax.swing.JTable TableReporteDeVentas;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

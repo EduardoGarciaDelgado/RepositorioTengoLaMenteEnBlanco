@@ -16,6 +16,7 @@ public class Producto {
     public int IDProducto;
     public String NombreProducto;
     public float PrecioProducto;
+    public float PrecioVentaProducto;
     public float CantidadProducto;
     public String FechaCaducidad;
     public String Proveedor_idProveedor;
@@ -72,11 +73,20 @@ public class Producto {
         this.Proveedor_idProveedor = Proveedor_idProveedor;
     }
     
+    
     /*
     public void setFechaCaducidad(java.util.Date fecha) {
         this.FechaCaducidad = FechaCaducidad;
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     */
+
+    public float getPrecioVentaProducto() {
+        return PrecioVentaProducto;
+    }
+
+    public void setPrecioVentaProducto(float PrecioVentaProducto) {
+        this.PrecioVentaProducto = PrecioVentaProducto;
+    }
     
 }

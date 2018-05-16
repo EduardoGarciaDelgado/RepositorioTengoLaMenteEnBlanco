@@ -100,7 +100,7 @@ public class AltaProveedores extends javax.swing.JFrame {
 
     private void BTNGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNGuardarActionPerformed
         // TODO add your handling code here:
-        if (TXTNombreProveedor.getText() == null) {
+        if (TXTNombreProveedor.getText() != null) {
         mProveedor.setNombre(this.TXTNombreProveedor.getText());
         if (mConexion.con())
         {

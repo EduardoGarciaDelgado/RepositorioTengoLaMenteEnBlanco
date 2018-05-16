@@ -29,6 +29,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="BTNSalir" min="-2" max="-2" attributes="0"/>
                   <Component id="BTNGuardarReporteExistencia" min="-2" max="-2" attributes="0"/>
+                  <Component id="BTNReporteProductos" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
@@ -45,7 +46,9 @@
               <Component id="BTNGuardarReporteExistencia" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="BTNSalir" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="231" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <Component id="BTNReporteProductos" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="181" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -87,6 +90,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTNGuardarReporteExistenciaActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="BTNReporteProductos">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Ver Reporte Detallado"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BTNReporteProductosActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

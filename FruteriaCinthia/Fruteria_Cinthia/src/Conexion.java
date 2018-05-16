@@ -7,6 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.*;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -65,6 +66,7 @@ public class Conexion {
             consulta.execute("insert into Producto " +
                         "values (null,'" + mProducto.getNombreProducto() + "'," +
                         "'" + mProducto.getPrecioProducto() + "'," +
+                        "'" + mProducto.getPrecioVentaProducto() + "'," +
                          "'" + mProducto.getFechaCaducidad() + "'," + "'" + mProducto.getProveedor_idProveedor() +
                          "','" + mProducto.getCantidadProducto() + "');");
             return true;
@@ -82,6 +84,7 @@ public class Conexion {
             consulta.execute("update Producto set " + 
                         "Nombre = '" + mProductoNuevo.getNombreProducto() + "'," +
                         "Precio = '" + mProductoNuevo.getPrecioProducto() + "'," +
+                        "PrecioVenta = '" + mProductoNuevo.getPrecioVentaProducto() + "'," +
                         "FechaCaducidad = '" + mProductoNuevo.getFechaCaducidad() + "'," +
                         "Proveedor_idProveedor = '" + mProductoNuevo.getProveedor_idProveedor() + "'," +
                         "Cantidad = '" + mProductoNuevo.getCantidadProducto() + "'" +
@@ -120,6 +123,7 @@ public class Conexion {
                 mProducto.setIDProducto(resultado.getInt("idProducto"));
                 mProducto.setNombreProducto(resultado.getString("Nombre"));
                 mProducto.setPrecioProducto(Float.parseFloat(resultado.getString("Precio")));
+                mProducto.setPrecioVentaProducto(Float.parseFloat(resultado.getString("PrecioVenta")));
                 mProducto.setFechaCaducidad(resultado.getString("FechaCaducidad"));
                 mProducto.setProveedor_idProveedor(resultado.getString("Proveedor_idProveedor"));
                 mProducto.setCantidadProducto(Float.parseFloat(resultado.getString("Cantidad")));
@@ -145,7 +149,8 @@ public class Conexion {
                 mProducto = new Producto();
                 mProducto.setIDProducto(resultado.getInt("IdProducto"));
                 mProducto.setNombreProducto(resultado.getString("Nombre"));
-                mProducto.setPrecioProducto(resultado.getFloat("Precio"));
+                mProducto.setPrecioProducto(Float.parseFloat(resultado.getString("Precio")));
+                mProducto.setPrecioVentaProducto(resultado.getFloat("PrecioVenta"));
                 mProducto.setFechaCaducidad(resultado.getString("FechaCaducidad"));
                 mProducto.setProveedor_idProveedor(resultado.getString("Proveedor_idProveedor"));
                 mProducto.setCantidadProducto(Float.parseFloat(resultado.getString("Cantidad")));
@@ -327,7 +332,7 @@ public class Conexion {
         try {
             consulta = con.createStatement();
             consulta.execute("insert into Venta "  +
-                        "values (null,'" + mVenta.getFechaVenta() + "', '" + mVenta.getPrecioTotalVenta()+ "');");
+                        "values (null,'" + mVenta.getFechaVenta() + "', '" + mVenta.getPrecioTotalVenta()+  "', '" + mVenta.getGanacia()+ "');");
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -339,14 +344,13 @@ public class Conexion {
         try {
             consulta = con.createStatement();
             consulta.execute("insert into Detalle_Ventas " + 
-                        "(idDetalle_Ventas, Cantidad, Precio, Producto_idProducto, Venta_idVenta) " +
+                        "(idDetalle_Ventas, Cantidad, PrecioVenta, Producto_idProducto, Venta_idVenta) " +
                         "values (null,'" + mDetalleVenta.getCantidad() + "','" 
                                         + mDetalleVenta.getPrecio() + "','" 
                                         + mDetalleVenta.getProducto_IdProducto() + "','"
                                         + mDetalleVenta.getVenta_IdVenta() + "');");
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
             return false;
         }
     }   
@@ -355,7 +359,8 @@ public class Conexion {
         try {
             consulta = con.createStatement();
             consulta.execute("update Venta set " + 
-                        "PrecioTotalVenta = '" + nVenta.getPrecioTotalVenta() + "'" +
+                        "PrecioTotalVenta = '" + nVenta.getPrecioTotalVenta() + "'," +
+                        "Ganancia = '" + nVenta.getGanacia() + "'" +
                         " where idVenta = " + mVenta.getIdVenta() + ";");
             return true;
         } catch (Exception e) {
@@ -415,6 +420,7 @@ public class Conexion {
                 mVenta.setIdVenta(resultado.getInt("idVenta"));
                 mVenta.setFechaVenta(resultado.getString("FechaVenta"));
                 mVenta.setPrecioTotalVenta(resultado.getFloat("PrecioTotalVenta"));
+                mVenta.setGanacia(resultado.getFloat("Ganancia"));
                 mLista.add(mVenta);
             }
         } catch (Exception e) {
@@ -423,4 +429,45 @@ public class Conexion {
         return mLista;
       }
     
+    public ArrayList ConsultarRangosVenta(String Fecha1, String Fecha2) {
+        
+        ArrayList mLista = new ArrayList();
+        Venta mVenta=null;
+        Statement consulta;
+        ResultSet resultado;
+        try {
+            consulta = con.createStatement();
+            resultado = consulta.executeQuery("SELECT FechaVenta,sum(PrecioTotalVenta) FROM Venta WHERE FechaVenta >= '"+ Fecha1 +"' and FechaVenta <='"+ Fecha2 +"' group by FechaVenta;");
+            while (resultado.next()) {
+                mVenta = new Venta();
+                //mVenta.setIdVenta(resultado.getInt("idVenta"));
+                mVenta.setFechaVenta(resultado.getString("FechaVenta"));
+                mVenta.setPrecioTotalVenta(resultado.getFloat("PrecioTotalVenta"));
+                //mVenta.setGanacia(resultado.getFloat("Ganancia"));
+                mLista.add(mVenta);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return mLista;
+      }
+    
+    
+    public String url1 = "jdbc:mysql://localhost:8889/mydb";
+    public String user1 = "root";
+    public String pass = "root";
+
+    public Connection conectare() {
+        Connection link = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            link = DriverManager.getConnection(this.url1, this.user1, this.pass);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showConfirmDialog(null, e);
+
+        }
+        return link;
+    }
 }

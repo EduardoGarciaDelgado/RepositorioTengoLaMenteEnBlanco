@@ -12,6 +12,7 @@ public class Venta {
     public int IdVenta;
     public String FechaVenta;
     public float PrecioTotalVenta;
+    public float Ganacia;
 
     public int getIdVenta() {
         return IdVenta;
@@ -35,6 +36,14 @@ public class Venta {
 
     public void setPrecioTotalVenta(float PrecioTotalVenta) {
         this.PrecioTotalVenta = PrecioTotalVenta;
+    }
+
+    public float getGanacia() {
+        return Ganacia;
+    }
+
+    public void setGanacia(float Ganacia) {
+        this.Ganacia = Ganacia;
     }
 
  

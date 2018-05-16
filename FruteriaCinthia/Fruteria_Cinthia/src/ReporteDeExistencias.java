@@ -1,8 +1,16 @@
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -118,6 +126,7 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
         TableReporteDeExistencias = new javax.swing.JTable();
         BTNSalir = new javax.swing.JButton();
         BTNGuardarReporteExistencia = new javax.swing.JButton();
+        BTNReporteProductos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -138,6 +147,13 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
             }
         });
 
+        BTNReporteProductos.setText("Ver Reporte Detallado");
+        BTNReporteProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BTNReporteProductosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -147,7 +163,8 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(BTNSalir)
-                    .addComponent(BTNGuardarReporteExistencia))
+                    .addComponent(BTNGuardarReporteExistencia)
+                    .addComponent(BTNReporteProductos))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -160,7 +177,9 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
                 .addComponent(BTNGuardarReporteExistencia)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BTNSalir)
-                .addContainerGap(231, Short.MAX_VALUE))
+                .addGap(31, 31, 31)
+                .addComponent(BTNReporteProductos)
+                .addContainerGap(181, Short.MAX_VALUE))
         );
 
         pack();
@@ -176,6 +195,24 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
         ReporteDeExistencias mReporte = new ReporteDeExistencias();
         mReporte.guardaTabla();
     }//GEN-LAST:event_BTNGuardarReporteExistenciaActionPerformed
+
+    private void BTNReporteProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BTNReporteProductosActionPerformed
+        // TODO add your handling code here:
+        String path = "/Users/macbookair13/Documents/RepositorioTengoLaMenteEnBlanco/FruteriaCinthia/Fruteria_Cinthia/src/Existencias.jasper";
+        JasperReport jr = null;
+        
+        try {
+            //jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            jr = (JasperReport) JRLoader.loadObjectFromFile(path);
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, mConexion.conectare());
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setVisible(true);
+            jv.setTitle(path);
+            //this.dispose();
+        } catch (JRException ex) {
+            Logger.getLogger(ReporteDeExistencias.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_BTNReporteProductosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,6 +251,7 @@ public class ReporteDeExistencias extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BTNGuardarReporteExistencia;
+    private javax.swing.JButton BTNReporteProductos;
     private javax.swing.JButton BTNSalir;
     private javax.swing.JTable TableReporteDeExistencias;
     private javax.swing.JScrollPane jScrollPane1;

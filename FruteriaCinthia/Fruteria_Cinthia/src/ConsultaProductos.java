@@ -140,7 +140,8 @@ public class ConsultaProductos extends javax.swing.JFrame {
                 if (ContadorColumna == 1) {
                     Tabla.addColumn("ID");
                     Tabla.addColumn("Nombre");
-                    Tabla.addColumn("Precio");
+                    Tabla.addColumn("Precio Compra");
+                    Tabla.addColumn("Precio Venta");
                     Tabla.addColumn("Fecha Caducidad");
                     Tabla.addColumn("ID Proveedor");
                     Tabla.addColumn("Cantidad");
@@ -148,13 +149,14 @@ public class ConsultaProductos extends javax.swing.JFrame {
                 }
                 for (int i = 0; i < mArrayList.size(); i++) {
                     mProducto = (Producto) mArrayList.get(i);
-                    Datos = new String[6];
+                    Datos = new String[7];
                     Datos[0] = "" + mProducto.getIDProducto();
                     Datos[1] = mProducto.getNombreProducto();
                     Datos[2] = "" + mProducto.getPrecioProducto();
-                    Datos[3] = mProducto.getFechaCaducidad();
-                    Datos[4] = "" + mProducto.getProveedor_idProveedor();
-                    Datos[5] = "" + mProducto.getCantidadProducto();
+                    Datos[3] = "" + mProducto.getPrecioVentaProducto();
+                    Datos[4] = mProducto.getFechaCaducidad();
+                    Datos[5] = "" + mProducto.getProveedor_idProveedor();
+                    Datos[6] = "" + mProducto.getCantidadProducto();
                     Tabla.addRow(Datos);
                 }
 
@@ -169,6 +171,7 @@ public class ConsultaProductos extends javax.swing.JFrame {
             this.TBLProductos.getColumnModel().getColumn(3).setPreferredWidth(600);
             this.TBLProductos.getColumnModel().getColumn(4).setPreferredWidth(400);
             this.TBLProductos.getColumnModel().getColumn(5).setPreferredWidth(100);
+            this.TBLProductos.getColumnModel().getColumn(6).setPreferredWidth(100);
             if (this.TBLProductos.getRowCount() > 0) {
                 this.TBLProductos.setRowSelectionInterval(0, 0);
             }
@@ -197,21 +200,23 @@ public class ConsultaProductos extends javax.swing.JFrame {
                 if(ContadorColumna == 1) {
                 Tabla.addColumn("ID");
                 Tabla.addColumn("Nombre");
-                Tabla.addColumn("Precio");
+                Tabla.addColumn("Precio Compra");
+                Tabla.addColumn("Precio Venta");
                 Tabla.addColumn("Fecha Caducidad");
                 Tabla.addColumn("ID Proveedor");
                 Tabla.addColumn("Cantidad");
                 ContadorColumna=2;
                 }
                        
-                Datos = new String[6];
+                Datos = new String[7];
                 
                 Datos[0] = ""+ mProducto.getIDProducto();
                 Datos[1] = mProducto.getNombreProducto();
                 Datos[2] = "" + mProducto.getPrecioProducto();
-                Datos[3] = mProducto.getFechaCaducidad();
-                Datos[4] = "" + mProducto.getProveedor_idProveedor();
-                Datos[5] = "" + mProducto.getCantidadProducto();
+                Datos[3] = "" + mProducto.getPrecioVentaProducto();
+                Datos[4] = mProducto.getFechaCaducidad();
+                Datos[5] = "" + mProducto.getProveedor_idProveedor();
+                Datos[6] = "" + mProducto.getCantidadProducto();
             
                 Tabla.addRow(Datos);
             } else {
@@ -226,6 +231,7 @@ public class ConsultaProductos extends javax.swing.JFrame {
             this.TBLProductos.getColumnModel().getColumn(3).setPreferredWidth(600);
             this.TBLProductos.getColumnModel().getColumn(4).setPreferredWidth(400);
             this.TBLProductos.getColumnModel().getColumn(5).setPreferredWidth(100);
+            this.TBLProductos.getColumnModel().getColumn(6).setPreferredWidth(100);
             if (this.TBLProductos.getRowCount() > 0) {
                 this.TBLProductos.setRowSelectionInterval(0, 0);
                 }

@@ -41,6 +41,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         MenuReportes = new javax.swing.JMenu();
         ReporteExistencia = new javax.swing.JMenuItem();
         ReporteVenta = new javax.swing.JMenuItem();
+        ReporteVolumenVentas = new javax.swing.JMenuItem();
         MenuCompras = new javax.swing.JMenu();
         MenuVentas = new javax.swing.JMenu();
 
@@ -138,6 +139,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
             }
         });
         MenuReportes.add(ReporteVenta);
+
+        ReporteVolumenVentas.setText("REPORTE VOLUMEN VENTAS");
+        ReporteVolumenVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ReporteVolumenVentasActionPerformed(evt);
+            }
+        });
+        MenuReportes.add(ReporteVolumenVentas);
 
         jMenuBar1.add(MenuReportes);
 
@@ -245,6 +254,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
         mVentas.show();
     }//GEN-LAST:event_MenuVentasMouseClicked
 
+    private void ReporteVolumenVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReporteVolumenVentasActionPerformed
+        // TODO add your handling code here:
+        ReporteVolumenVentas FRMReporteVolumenVentas = new ReporteVolumenVentas();
+        FRMReporteVolumenVentas.setVisible(true);
+    }//GEN-LAST:event_ReporteVolumenVentasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -297,6 +312,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu MenuVentas;
     private javax.swing.JMenuItem ReporteExistencia;
     private javax.swing.JMenuItem ReporteVenta;
+    private javax.swing.JMenuItem ReporteVolumenVentas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
